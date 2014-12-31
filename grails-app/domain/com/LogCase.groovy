@@ -12,5 +12,10 @@ class LogCase {
 	static belongsTo = [product:Product]
 	
     static constraints = {
+		ticketUrl(nullable: true)
     }
+	
+	static mapping = {
+		version false
+	}
 }

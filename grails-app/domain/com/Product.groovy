@@ -6,7 +6,13 @@ class Product {
 	String productVersion
 	
     static constraints = {
+		name(blank:false, unique:['productVersion', 'name'])
+		productVersion(blank:false)
     }
+	
+	static mapping = {
+		version false
+	}
 	
 	public static fetchAllProduct(){
 		return Product.list().collect { it.name + "-" + it.productVersion}

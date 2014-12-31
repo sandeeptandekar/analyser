@@ -10,4 +10,8 @@ class LogException {
 	
     static constraints = {
     }
+	
+	static mapping = {
+		version false
+	}
 }
