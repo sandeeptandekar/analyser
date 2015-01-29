@@ -98,7 +98,7 @@
                                         <li>View a Case <input type="text" name="caseno" id="case"/>   <g:actionSubmit value="show" action="page" name="view" id="view1"/></li>
                                         <li><a href="product/create">Add a product</a>
                                         </li>
-                                        <li><a href="logCase/index"> List of Cases</a>
+                                        <li><a href="logCase/index?sort=id&max=10&order=desc"> List of Cases</a>
                                          </li>
                          </ul>
 </g:form>

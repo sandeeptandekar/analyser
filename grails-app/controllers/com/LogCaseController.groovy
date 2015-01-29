@@ -158,9 +158,9 @@ def analyse()
     HashMap<String,HashMap<String,HashMap<Integer,String>>> out=new HashMap<String,HashMap<String,HashMap<Integer,String>>>();
     HashMap<String,Integer> hm=new HashMap<String,Integer>();
     HashMap<String,HashMap<Integer,String>> hm4=new HashMap<String,HashMap<Integer,String>>();
- HashMap<Integer,String> hm1=new HashMap<Integer,String>();
- HashMap<Integer,String> hm22=new HashMap<Integer,String>();
- HashMap<Integer,String> hm33=new HashMap<Integer,String>();
+    HashMap<Integer,String> hm1=new HashMap<Integer,String>();
+    HashMap<Integer,String> hm22=new HashMap<Integer,String>();
+     HashMap<Integer,String> hm33=new HashMap<Integer,String>();
 
 
 
@@ -168,182 +168,182 @@ def analyse()
     ArrayList<Object> arrayList2=new ArrayList<Object>();
     ArrayList<Object> arrayList3=new ArrayList<Object>();
    String red="red"
-String green="green"
-hm.put(green,0)
-hm.put(red,0)
-hm.put("BLACK",0)
-def product=Product.findById(productId)
+   String green="green"
+   hm.put(green,0)
+   hm.put(red,0)
+   hm.put("BLACK",0)
+   def product=Product.findById(productId)
 //def product1=product.id
 //println product
-def log=new LogCase(ticketUrl:ticket,uploadedFilePath:uploadedPath,product:product)
-if (!log.save(flush:true)) {
-    log.errors.each {
+   def log=new LogCase(ticketUrl:ticket,uploadedFilePath:uploadedPath,product:product)
+     if (!log.save(flush:true)) {
+           log.errors.each {
         println it
     }
 }
-def logId=LogCase.findByUploadedFilePath(uploadedPath)
-def tick=logId.ticketUrl
-println tick
-def id=logId.id
-Code l=new Code();
-def hm2=l.getAllLogFiles(mainFolder,uploadedPath);
-System.out.println("summary ==================");
+   def logId=LogCase.findByUploadedFilePath(uploadedPath)
+   def tick=logId.ticketUrl
+   println tick
+   def id=logId.id
+   Code l=new Code();
+   def hm2=l.getAllLogFiles(mainFolder,uploadedPath);
+    System.out.println("summary ==================");
                         for (String entry : hm2.keySet()) {
                                 System.out.println("Key = " + entry + ", Value = "
                                                + hm2.get(entry));}
                    for(String entry1:hm2.keySet())
-{
-String fd=entry1;
-String path=hm2.get(entry1);
+ {
+           String fd=entry1;
+           String path=hm2.get(entry1);
 
-File fdName=new File(fd);
-String folder=fdName.getName();
-def expContainer=new ExpContainer(title:folder,logCase:logId)
-if (!expContainer.save(flush:true)) {
+           File fdName=new File(fd);
+           String folder=fdName.getName();
+           def expContainer=new ExpContainer(title:folder,logCase:logId)
+           if (!expContainer.save(flush:true)) {
     expContainer.errors.each {
         println it
     }
-}
-System.out.println(path);
+   }
+          System.out.println(path);
                 def list= l.properList(mainFolder,path);
-for(int i=0;i<list.size();i+=3)
-{
-def key1=list.get(i);
-Integer frequency=list.get(i+1);
-String logFilePath=list.get(i+2);
-String description="description";
-String resolution="resolution";
-String category="BLACK";
+                for(int i=0;i<list.size();i+=3)
+     {
+          def key1=list.get(i);
+          Integer frequency=list.get(i+1);
+          String logFilePath=list.get(i+2);
+          String description="description";
+          String resolution="resolution";
+          String category="BLACK";
 //String expRef="";
-println key1
-println product
-def key2=key1.trim();
-def expRef1=ExceptionRef.findByKeyAndProduct(key2,product)
-println "----" + expRef1
-if(expRef1 == null)
-{
-expRef1=new ExceptionRef(key:key2,category:category,description:description,resolution:resolution,product:product,caseId:id)
-if (!expRef1.save(flush:true)) {
+          println key1
+          println product
+          def key2=key1.trim();
+          def expRef1=ExceptionRef.findByKeyAndProduct(key2,product)
+          println "----" + expRef1
+          if(expRef1 == null)
+     {
+        expRef1=new ExceptionRef(key:key2,category:category,description:description,resolution:resolution,product:product,caseId:id)
+        if (!expRef1.save(flush:true)) {
    expRef1.errors.each {
         println it
        }
-}
+     }
 
-}
+     }
 
-println  "-----------" + expRef1;
-def logException=new LogException(frequency:frequency,logFilePath:logFilePath,expContainer:expContainer,expRef:expRef1)
+         println  "-----------" + expRef1;
+         def logException=new LogException(frequency:frequency,logFilePath:logFilePath,expContainer:expContainer,expRef:expRef1)
 ////logException.save()
-if (!logException.save(flush:true)) {
-    logException.errors.each {
+         if (!logException.save(flush:true)) {
+            logException.errors.each {
         println it
     }
-}
+    }
 
 //hm.put(expRef1,0);
+   }
 }
-}
-def hm3=l.getAllLogFiles(mainFolder,uploadedPath);
-for(String entry: hm3.keySet())
-{
-String df=entry;
-File df1=new File(df)
-String df2=df1.getName() 
-def container=ExpContainer.findByTitle(df2)
-def container1=container.logCase
+          def hm3=l.getAllLogFiles(mainFolder,uploadedPath);
+          for(String entry: hm3.keySet())
+          {
+            String df=entry;
+            File df1=new File(df)
+            String df2=df1.getName() 
+            def container=ExpContainer.findByTitle(df2)
+            def container1=container.logCase
 //def container2=logCase.findById(container1)
-def logExp=LogException.findAllByExpContainer(container)
-println logExp
-int count1=0;
-int count3=0;
-int v=0;
-int v1=0;
-String color="BLACK"
-String color4="BLACK"
-def black=logExp.expRefId
-def containerId=container.id
+            def logExp=LogException.findAllByExpContainer(container)
+            println logExp
+            int count1=0;
+            int count3=0;
+            int v=0;
+            int v1=0;
+            String color="BLACK"
+            String color4="BLACK"
+            def black=logExp.expRefId
+            def containerId=container.id
 //arrayList.add(containerId)
-hm1.put("key",id)
-hm4.put(color,hm1)
-out.put("0",hm4)
-hm4=new HashMap<String,HashMap<Integer,String>>();
-hm1=new HashMap<Integer,String>();
+            hm1.put("key",id)
+            hm4.put(color,hm1)
+            out.put("0",hm4)
+            hm4=new HashMap<String,HashMap<Integer,String>>();
+            hm1=new HashMap<Integer,String>();
 
-hm1.put("key1",ticket)
-hm4.put(color4,hm1)
-out.put("1",hm4)
-hm4=new HashMap<String,HashMap<Integer,String>>();
-hm1=new HashMap<Integer,String>();
+            hm1.put("key1",ticket)
+            hm4.put(color4,hm1)
+            out.put("1",hm4)
+            hm4=new HashMap<String,HashMap<Integer,String>>();
+            hm1=new HashMap<Integer,String>();
 //arrayList=new ArrayList<Object>();
 
-println(black)
-println(container)
+            println(black)
+            println(container)
 //println(containerId)
-for(int j=0;j<black.size();j++)
-{
-String value=black.get(j);
-def ref=ExceptionRef.findById(value)
-def color1=ref.category
+                    for(int j=0;j<black.size();j++)
+                        {
+                            String value=black.get(j);
+                            def ref=ExceptionRef.findById(value)
+                            def color1=ref.category
 
 //if(color1 == color )
 //{
-if(hm.containsKey(color1))
-{
-count1=hm.get(color1)
-count1++;
-hm.put(color1,count1)
-}
-else
-{
-hm.put(color1,1)
-}
-}
+                            if(hm.containsKey(color1))
+                              {
+                                   count1=hm.get(color1)
+                                   count1++;
+                                   hm.put(color1,count1)
+                              }
+                            else
+                              {
+                                    hm.put(color1,1)
+                              }
+                          }
 //}
-if(!hm4.containsKey(color))
-{
-count3=hm.get(color)
+                              if(!hm4.containsKey(color))
+                               {
+                                    count3=hm.get(color)
 
-arrayList.add(count3)
+                                    arrayList.add(count3)
 //println "-----------" + containerId
 //def link=g.createLink(controller : "logCase",action : "black", params : [ containerId : containerId, category : color])
-def link=g.createLink(controller : "logCase",action : "black" , params : [id : containerId,case1 : id])
-hm1.put(count3,link)
-arrayList.add(link)
+                                    def link=g.createLink(controller : "logCase",action : "black" , params : [id : containerId,case1 : id])
+                                    hm1.put(count3,link)
+                                    arrayList.add(link)
 
-hm4.put(color,hm1)
-}
-if(!hm4.containsKey(green))
-{
- v=hm.get(green)
-arrayList2.add(v)
-def link=g.createLink(controller : "logCase",action : "green" , params : [id : containerId,case1 : id])
-hm22.put(v,link)
-arrayList2.add(link)
-hm4.put(green,hm22)
-}
-if(!hm4.containsKey(red))
-{
-v1=hm.get(red)
-arrayList3.add(v1)
-def link=g.createLink(controller : "logCase",action : "red" , params : [id : containerId,case1 : id])
-hm33.put(v1,link)
-arrayList3.add(link)
+                                    hm4.put(color,hm1)
+                               }
+                             if(!hm4.containsKey(green))
+                               {
+                                   v=hm.get(green)
+                                   arrayList2.add(v)
+                                   def link=g.createLink(controller : "logCase",action : "green" , params : [id : containerId,case1 : id])
+                                   hm22.put(v,link)
+                                   arrayList2.add(link)
+                                   hm4.put(green,hm22)
+                               }
+                             if(!hm4.containsKey(red))
+                               {
+                                    v1=hm.get(red)
+                                    arrayList3.add(v1)
+                                    def link=g.createLink(controller : "logCase",action : "red" , params : [id : containerId,case1 : id])
+                                    hm33.put(v1,link)
+                                    arrayList3.add(link)
 
-hm4.put(red,hm33)
-}
-out.put(df2,hm4)
-hm= new HashMap<String,Integer>();
-hm4=new HashMap<String,Integer>();
- hm1=new HashMap<Integer,String>();
- hm22=new HashMap<Integer,String>();
- hm33=new HashMap<Integer,String>();
+                                    hm4.put(red,hm33)
+                                }
+                                    out.put(df2,hm4)
+                                    hm= new HashMap<String,Integer>();
+                                    hm4=new HashMap<String,Integer>();
+                                    hm1=new HashMap<Integer,String>();
+                                    hm22=new HashMap<Integer,String>();
+                                    hm33=new HashMap<Integer,String>();
 
-arrayList=new ArrayList<Object>();
-arrayList2=new ArrayList<Object>();
-arrayList3=new ArrayList<Object>();
-hm.put(green,0)
-hm.put(red,0)
-hm.put("BLACK",0)
+                                   arrayList=new ArrayList<Object>();
+                                   arrayList2=new ArrayList<Object>();
+                                   arrayList3=new ArrayList<Object>();
+                                   hm.put(green,0)
+                                   hm.put(red,0)
+                                   hm.put("BLACK",0)
 }
 System.out.println("summary ==================");
                         for (String entry : out.keySet()) {
