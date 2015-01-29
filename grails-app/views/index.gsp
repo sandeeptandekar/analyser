@@ -65,7 +65,7 @@
 				margin: 0.25em 0;
 			}
 
-			@media screen and (max-width: 480px) {
+			@media screen and (max-width: 580px) {
 				#status {
 					display: none;
 				}
@@ -83,14 +83,25 @@
 	<body>
 		<div id="page-body" role="main">
 			<h1>Welcome to Log Analyser</h1>
+
 			<div id="controller-list" role="navigation">
-				<h2>Available Controllers:</h2>
-				<ul>
-					<g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
-						<li class="controller"><g:link controller="${c.logicalPropertyName}">${c.fullName}</g:link></li>
-					</g:each>
-				</ul>
+				            
+
+<h2>Available Pages:</h2>
+
+                           
+                                   <ul>
+					<li><a href="logCase/create"> Create a New Case </a>
+                                        </li>
+                                        
+                              <g:form name="myform" method="post" controller="logCase">
+                                        <li>View a Case <input type="text" name="caseno" id="case"/>   <g:actionSubmit value="show" action="page" name="view" id="view1"/></li>
+                                        <li><a href="product/create">Add a product</a>
+                                        </li>
+                                        <li><a href="logCase/index"> List of Cases</a>
+                                         </li>
+                         </ul>
+</g:form>
 			</div>
-		</div>
-	</body>
+		</div>	</body>
 </html>
