@@ -25,7 +25,7 @@
 					<tr>
                                             
 
-<g:sortableColumn property="id" title="${message(code: 'logCase.id.label', default: 'Case id')}" defaultOrder="desc" />
+<g:sortableColumn property="id" defaultOrder="desc" title="${message(code: 'logCase.id.label', default: 'Case id')}"  />
 					
 						<g:sortableColumn property="dateCreated"  defaultOrder="desc" title="${message(code: 'logCase.dateCreated.label', default: 'Date Created')}" />
 					
