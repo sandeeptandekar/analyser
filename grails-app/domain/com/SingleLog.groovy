@@ -1,19 +1,15 @@
 package com
 
-class LogException {
-	
-	ExceptionRef expRef
+class SingleLog {
+ExceptionRef expRef
 	int frequency
 	String logFilePath
 	
 	static belongsTo = [expContainer:ExpContainer]
-	
     static constraints = {
     }
-	
-	static mapping = {
+
+static mapping = {
 		version false
-                logFilePath type:'text';
-                
 	}
 }

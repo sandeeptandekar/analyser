@@ -25,7 +25,7 @@ class ExceptionRef {
 		resolution type:'text';
                 category type:'text';
                 key type:'text';
-                key index:'exception_ref_product_id_key_key';
+                //key index:'exception_ref_product_id_key_key';
                
 
 	}

@@ -8,7 +8,7 @@ class LogCase {
 	String uploadedFilePath
 
 	
-	static hasMany = [expContainer:ExpContainer]
+	//static hasMany = [expContainer:ExpContainer]
 	static belongsTo = [product:Product]
 	
     static constraints = {

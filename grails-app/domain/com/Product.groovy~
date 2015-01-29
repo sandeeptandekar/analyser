@@ -18,7 +18,7 @@ class Product {
 		return Product.list().collect { it.name + "-" + it.productVersion}
 	}
 	
-	public String toString(){
-	return name + "-" + productVersion
-	}
+	//public String toString(){
+	//	return name + "-" + productVersion
+	//}
 }

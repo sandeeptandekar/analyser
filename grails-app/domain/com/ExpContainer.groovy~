@@ -1,0 +1,17 @@
+package com
+
+class ExpContainer {
+
+	String title
+	
+	static belongsTo = [logCase:LogCase]
+	
+	static hasMany = [singleLog:SingleLog]
+	
+    static constraints = {
+		title(blank:false)
+    }
+	static mapping = {
+		version false
+	}
+}

@@ -1,0 +1,23 @@
+package org.example
+
+class Analyser {
+String line
+int frequency
+String stack
+String file
+String occurence
+//String name
+    static constraints = {
+   line(blank: false)
+   frequency(blank: false)
+  // stack(blank: false)
+     file(blank: false)
+     occurence(blank: false)
+  //   name(blank: false)
+ }
+  static mapping = {
+  
+  stack type: "text"
+  occurence type: "text"
+}
+}
