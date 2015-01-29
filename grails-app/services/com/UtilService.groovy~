@@ -19,7 +19,6 @@ import org.springframework.web.servlet.ModelAndView
 import grails.util.GrailsNameUtils
 import org.codehaus.groovy.grails.web.context.ServletContextHolder
 import uk.co.desirableobjects.ajaxuploader.AjaxUploaderService
-import com.LogCaseController
 @Transactional
 class UtilService {
 
