@@ -25,16 +25,15 @@
 			<ol class="property-list logCase">
 			
 				<g:if test="${logCaseInstance?.dateCreated}">
-				<li class="fieldcontain">
+				
 					<span id="dateCreated-label" class="property-label"><g:message code="logCase.dateCreated.label" default="Date Created" /></span>
 					
 						<span class="property-value" aria-labelledby="dateCreated-label"><g:formatDate date="${logCaseInstance?.dateCreated}" /></span>
 					
-				</li>
+				
 				</g:if>
 			
-				
-<g:if test="${logCaseInstance?.expContainer}">
+				<g:if test="${logCaseInstance?.expContainer}">
 				<li class="fieldcontain">
 					<span id="expContainer-label" class="property-label"><g:message code="logCase.expContainer.label" default="Exp Container" /></span>
 					
@@ -43,7 +42,8 @@
 						</g:each>
 					
 				</li>
-				</g:if>			
+				</g:if>
+			
 				<g:if test="${logCaseInstance?.lastUpdated}">
 				<li class="fieldcontain">
 					<span id="lastUpdated-label" class="property-label"><g:message code="logCase.lastUpdated.label" default="Last Updated" /></span>
@@ -61,8 +61,6 @@
 					
 				</li>
 				</g:if>
- 
-
 			
 				<g:if test="${logCaseInstance?.ticketUrl}">
 				<li class="fieldcontain">
@@ -86,7 +84,7 @@
 			<g:form url="[resource:logCaseInstance, action:'delete']" method="delete">
 				<fieldset class="buttons">
 					<g:link class="edit" action="edit" resource="${logCaseInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
-					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></fieldSet><fieldSet class="buttons">		
+					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></fieldSet><fieldSet class="buttons"><g:actionSubmit action="page" value="Summary"/>		
 		</fieldset>
 			</g:form>
 		</div>

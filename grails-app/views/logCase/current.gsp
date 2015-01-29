@@ -1,5 +1,4 @@
-
-<%@ page import="com.LogCase" %>
+<%@ page import="com.LogCase" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -23,28 +22,28 @@
 			<table>
 			<thead>
 					<tr>
-                                            
+                                            <th><g:message code="logCase.id.label" default="Case id" /></th>
 
-<g:sortableColumn property="id" title="${message(code: 'logCase.id.label', default: 'Case id')}" defaultOrder="desc" />
+
 					
-						<g:sortableColumn property="dateCreated"  defaultOrder="desc" title="${message(code: 'logCase.dateCreated.label', default: 'Date Created')}" />
+						<g:sortableColumn property="dateCreated" title="${message(code: 'logCase.dateCreated.label', default: 'Date Created')}" />
 					
-						<g:sortableColumn property="lastUpdated" title="${message(code: 'logCase.lastUpdated.label', default: 'Last Updated')}" defaultOrder="desc" />
+						<g:sortableColumn property="lastUpdated" title="${message(code: 'logCase.lastUpdated.label', default: 'Last Updated')}" />
 					
 						<th><g:message code="logCase.product.label" default="Product" /></th>
 					
-						<g:sortableColumn property="ticketUrl" title="${message(code: 'logCase.ticketUrl.label', default: 'Ticket Url')}" defaultOrder="desc"/>
+						<g:sortableColumn property="ticketUrl" title="${message(code: 'logCase.ticketUrl.label', default: 'Ticket Url')}" />
 					
-						<g:sortableColumn property="uploadedFilePath" title="${message(code: 'logCase.uploadedFilePath.label', default: 'Uploaded File Path')}" defaultOrder="desc" />
+						<g:sortableColumn property="uploadedFilePath" title="${message(code: 'logCase.uploadedFilePath.label', default: 'Uploaded File Path')}" />
 					
 					</tr>
 				</thead>
 				<tbody>
-				<g:each in="${logCaseInstanceList}" status="i" var="logCaseInstance">
+				<g:each in="${smallList}" status="i" var="logCaseInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
                                                 
-					<td><g:link action="page1" id="${logCaseInstance.id}">${logCaseInstance.id}</g:link></td>
-						<td>${fieldValue(bean: logCaseInstance, field: "dateCreated")}</td>
+					<td>${fieldValue(bean: logCaseInstance, field: "id")}</td>
+						<td><g:link action="show" id="${logCaseInstance.id}">${fieldValue(bean: logCaseInstance, field: "dateCreated")}</g:link></td>
 					
 						<td><g:formatDate date="${logCaseInstance.lastUpdated}" /></td>
 					

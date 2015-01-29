@@ -6,7 +6,6 @@
 		<g:set var="entityName" value="${message(code: 'logCase.label', default: 'LogCase')}" />
 		<title><g:message code="default.create.label" args="[entityName]" /></title>
       <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
-
 <uploader:head />
 	</head>
 	<body>
@@ -32,23 +31,20 @@
 			<g:form controller="logCase" action="analyse">
 				<fieldset class="form">
 <g:render template="form"/>
-
 <uploader:uploader id="fileUploader" url="${[controller:'logCase', action:'test']}">
                                            <uploader:onComplete>
-
-    alert('Thank you for uploading the file '+fileName);
+    
+    alert('Thank you for uploading the file '+fileName); 
 console.log(responseJSON);
 if(responseJSON.success) {
 $('#uploadedFilePath').val(responseJSON.filePath);
-}
+} 
                                            </uploader:onComplete>
                                            </uploader:uploader>
 
-
-
 </fieldSet>
 				<fieldset class="buttons">
-					
+					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
  <g:submitButton name="Analyse" action="analyse" />
 
 				</fieldset>

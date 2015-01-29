@@ -8,7 +8,6 @@
 		<title><g:message code="default.show.label" args="[entityName]" /></title>
 	</head>
 	<body>
-
 		<a href="#show-logCase" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 		<div class="nav" role="navigation">
 			<ul>
@@ -33,8 +32,7 @@
 				</li>
 				</g:if>
 			
-				
-<g:if test="${logCaseInstance?.expContainer}">
+				<g:if test="${logCaseInstance?.expContainer}">
 				<li class="fieldcontain">
 					<span id="expContainer-label" class="property-label"><g:message code="logCase.expContainer.label" default="Exp Container" /></span>
 					
@@ -43,7 +41,8 @@
 						</g:each>
 					
 				</li>
-				</g:if>			
+				</g:if>
+			
 				<g:if test="${logCaseInstance?.lastUpdated}">
 				<li class="fieldcontain">
 					<span id="lastUpdated-label" class="property-label"><g:message code="logCase.lastUpdated.label" default="Last Updated" /></span>
@@ -61,8 +60,6 @@
 					
 				</li>
 				</g:if>
- 
-
 			
 				<g:if test="${logCaseInstance?.ticketUrl}">
 				<li class="fieldcontain">
@@ -83,13 +80,12 @@
 				</g:if>
 			
 			</ol>
-			<g:form url="[resource:logCaseInstance, action:'delete']" method="delete">
+			<g:form url="[resource:logCaseInstance, action:'delete']" method="DELETE">
 				<fieldset class="buttons">
 					<g:link class="edit" action="edit" resource="${logCaseInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
-					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></fieldSet><fieldSet class="buttons">		
-		</fieldset>
-			</g:form>
+					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+<g:actionSubmit action="page"  class="show" value="Summary"/>	</fieldset></g:form>
+			
 		</div>
-
 	</body>
 </html>

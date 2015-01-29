@@ -1,0 +1,127 @@
+<%@ page import="com.ExceptionRef" %>
+<!DOCTYPE html>
+<html>
+	<head>
+<meta name="layout" content="main">
+                <g:set var="entityName" value="${message(code: 'logCase.label', default: 'LogCase')}" />
+                <title><g:message code="default.show.label" args="[entityName]" /></title>
+	</head>
+	<body>
+<a href="#show-logCase" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
+                <div class="nav" role="navigation">
+                        <ul>
+                                <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
+                       <li><g:each in="${hm}" var="ana"><g:if test="${ana.key == '1'}"><a href="${ana.value}"> Back</a></g:if></g:each></li>
+                        </ul>
+                </div>
+<div id="show-logCase" class="content scaffold-show" role="main">
+
+<ol class="property-list logCase">
+
+               
+
+<g:form method="PUT">
+<fieldset class="form">
+       
+
+        <g:each in="${black}" var="ana">
+      <g:if test="${ana.key == '1'}">
+ <li class="fieldcontain">   
+
+                                        <span id="dateCreated-label" class="property-label"><g:message code="logCase.dateCreated.label" default="Key" /></span>
+
+ <span id="dateCreated-label" class="property-value"><pre>${ana.value}</pre>
+</span>
+                          </li>      
+
+          </g:if>
+
+
+<g:if test="${ana.key == '2'}">
+    <li class="fieldcontain">
+
+                                        <span id="dateCreated-label" class="property-label"><g:message code="logCase.dateCreated.label" default="product" /></span>
+ <span id="dateCreated-label" class="property-value"> <g:select id="product" name="product.id" from="${com.Product.list()}" optionKey="id" required="" value="${ana.value}" class="many-to-one"/></span>
+                                                
+
+</li>                                
+
+          </g:if>
+<g:if test="${ana.key == '3'}">
+    <li class="fieldcontain">
+                                        <span id="dateCreated-label" class="property-label"><g:message code="logCase.dateCreated.label" default="category" /></span>
+
+                                                <span id="dateCreated-label" class="property-value"> <g:select id="category" name="category" from="${ExceptionRef.fetchAllCategory()}"  required="" value="${ana.value}" class="many-to-one"/>
+</span>
+                                </li>
+
+          </g:if>
+<g:if test="${ana.key == '4'}">
+    <li class="fieldcontain">
+                                        <span id="dateCreated-label" class="property-label"><g:message code="logCase.dateCreated.label" default="description" /></span>
+
+        <span id="dateCreated-label" class="property-value">                                         <g:textField  id="description" name="description" required="" value="${ana.value}"/></span>
+
+
+                                </li>
+
+          </g:if>
+<g:if test="${ana.key == '5'}">
+    <li class="fieldcontain">
+                                        <span id="dateCreated-label" class="property-label"><g:message code="logCase.dateCreated.label" default="Resolution" /></span>
+
+                                               <span id="dateCreated-label" class="property-value">  <g:textField  id="resolution" name="resolution" required="" value="${ana.value}"/></span>
+
+                                </li>
+
+          </g:if>
+<g:if test="${ana.key == '6'}">
+    <li class="fieldcontain">
+                                        
+                                                <g:hiddenField  id="caseId" name="caseId" required="" value="${ana.value}"/>
+
+                                </li>
+
+          </g:if>
+
+<g:if test="${ana.key == '7'}">
+    <li class="fieldcontain">
+                                        
+
+                                                <g:hiddenField  id="ref" name="ref" required="" value="${ana.value}"/>
+
+                                </li>
+
+          </g:if>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</g:each>
+<fieldset class="buttons">
+<g:actionSubmit class="delete" action="update2" value="update"  />
+</fieldSet>
+</fieldSet>
+</g:form>
+</ol>
+   </div>
+       
+                        
+                        
+
+	</body>
+
+</html>
+
+
+

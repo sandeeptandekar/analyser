@@ -30,7 +30,18 @@
 		<g:message code="logCase.uploadedFilePath.label" default="Uploaded File Path" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:textField name="uploadedFilePath" required="" value="${logCaseInstance?.uploadedFilePath}"/>
+	<g:textField name="uploadedFilePath" required="" value="${logCaseInstance?.uploadedFilePath}"/><uploader:uploader id="fileUploader" url="${[controller:'logCase', action:'test']}">
+                                           <uploader:onComplete>
+
+    alert('Thank you for uploading the file '+fileName);
+console.log(responseJSON);
+if(responseJSON.success) {
+$('#uploadedFilePath').val(responseJSON.filePath);
+}
+                                           </uploader:onComplete>
+                                           </uploader:uploader>
+
+
 
 </div>
 
