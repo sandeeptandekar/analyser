@@ -36,10 +36,10 @@ import org.codehaus.groovy.grails.plugins.web.taglib.ApplicationTagLib
 class LogCaseController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-   UtilService utilservice
- def scaffold=true
-static defaultAction="create"
-AjaxUploaderService ajaxUploaderService
+    UtilService utilservice
+    def scaffold=true
+    static defaultAction="create"
+    AjaxUploaderService ajaxUploaderService
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond LogCase.list(params), model:[logCaseInstanceCount: LogCase.count()]
@@ -131,21 +131,21 @@ def test()
 {
 try
 {
-File root=new File("/home/kavitha/project/files");
+       File root=new File("/home/kavitha/project/files");
        Date date = new Date();
-         String d =date.getTime().toString();
-File f=new File(root,d)
-f.mkdir();
-File f1=new File(f,params.qqfile)
-f1.createNewFile();
-InputStream inputStream = selectInputStream(request)
-ajaxUploaderService.upload(inputStream,f1)
-String path=f.getAbsolutePath();
-return render(text: [success:true, filePath:path] as JSON, contentType:'text/html')
+       String d =date.getTime().toString();
+       File f=new File(root,d)
+       f.mkdir();
+       File f1=new File(f,params.qqfile)
+       f1.createNewFile();
+       InputStream inputStream = selectInputStream(request)
+       ajaxUploaderService.upload(inputStream,f1)
+       String path=f.getAbsolutePath();
+       return render(text: [success:true, filePath:path] as JSON, contentType:'text/html')
 }
 catch (FileUploadException e) {
-log.error("Failed to upload file.", e)
-return render(text: [success:false] as JSON, contentType:'text/html')
+       log.error("Failed to upload file.", e)
+       return render(text: [success:false] as JSON, contentType:'text/html')
 }
 }
 def analyse()
@@ -387,262 +387,260 @@ def link=g.createLink(controller : "logCase",action : "show", params : [ logCase
 }
 def page()
 {
-def a=params.id
-def a1=params.caseno
-def a3=a1
-def logCaseInstance=LogCase.findById(a3)
-def ticket=logCaseInstance.ticketUrl
-def logCaseInstance1= logCaseInstance.product
-def logCaseInstance2= logCaseInstance.uploadedFilePath
+    def a=params.id
+    def a1=params.caseno
+    def a3=a1
+    def logCaseInstance=LogCase.findById(a3)
+    def ticket=logCaseInstance.ticketUrl
+    def logCaseInstance1= logCaseInstance.product
+    def logCaseInstance2= logCaseInstance.uploadedFilePath
 
 //HashMap<String,Integer> hm=new HashMap<String,Integer>();
 //HashMap<Object,HashMap<String,ArrayList>> out=new HashMap<String,HashMap<String,ArrayList>>();
 //HashMap<String,ArrayList> hm4=new HashMap<String,ArrayList>();
- HashMap<String,HashMap<String,HashMap<Integer,String>>> out=new HashMap<String,HashMap<String,HashMap<Integer,String>>>();
+    HashMap<String,HashMap<String,HashMap<Integer,String>>> out=new HashMap<String,HashMap<String,HashMap<Integer,String>>>();
     HashMap<String,Integer> hm=new HashMap<String,Integer>();
     HashMap<String,HashMap<Integer,String>> hm4=new HashMap<String,HashMap<Integer,String>>();
- HashMap<Integer,String> hm1=new HashMap<Integer,String>();
- HashMap<Integer,String> hm22=new HashMap<Integer,String>();
- HashMap<Integer,String> hm33=new HashMap<Integer,String>();
+    HashMap<Integer,String> hm1=new HashMap<Integer,String>();
+    HashMap<Integer,String> hm22=new HashMap<Integer,String>();
+    HashMap<Integer,String> hm33=new HashMap<Integer,String>();
 
-ArrayList<Object> arrayList=new ArrayList<Object>();
-ArrayList<Object> arrayList2=new ArrayList<Object>();
-ArrayList<Object> arrayList3=new ArrayList<Object>();
-String color="BLACK"
-String red="red"
-String green="green"
-int count3=0;
-int count4=0;
-int count5=0;
-hm.put("green",0)
-hm.put("red",0)
-hm.put("BLACK",0)
-def path=ExpContainer.findAllByLogCase(logCaseInstance)
-println "-------------" + path
+    ArrayList<Object> arrayList=new ArrayList<Object>();
+    ArrayList<Object> arrayList2=new ArrayList<Object>();
+    ArrayList<Object> arrayList3=new ArrayList<Object>();
+    String color="BLACK"
+    String red="red"
+    String green="green"
+    int count3=0;
+    int count4=0;
+    int count5=0;
+    hm.put("green",0)
+    hm.put("red",0)
+    hm.put("BLACK",0)
+    def path=ExpContainer.findAllByLogCase(logCaseInstance)
+    println "-------------" + path
 //arrayList.add(logCaseInstance1)
 //arrayList.add(a1)
 //hm4.put(logCaseInstance1,arrayList)
 
-hm1.put("key",a1)
-hm4.put(color,hm1)
-out.put("0",hm4)
-hm4=new HashMap<String,HashMap<Integer,String>>();
-hm1=new HashMap<Integer,String>();
-hm1.put("key1",ticket)
-hm4.put(red,hm1)
-out.put("1",hm4)
-hm4=new HashMap<String,HashMap<Integer,String>>();
-hm1=new HashMap<Integer,String>();
-for(int k=0;k<path.size();k++)
-{
-def b=path.get(k)
-println b
-def c=b.title
-def c2=b.id
-def b1=LogException.findAllByExpContainer(b)
-println "------------" + b1
-for(int j=0;j<b1.size();j++)
-{
-def value=b1.get(j)
+    hm1.put("key",a1)
+    hm4.put(color,hm1)
+    out.put("0",hm4)
+    hm4=new HashMap<String,HashMap<Integer,String>>();
+    hm1=new HashMap<Integer,String>();
+    hm1.put("key1",ticket)
+    hm4.put(red,hm1)
+    out.put("1",hm4)
+    hm4=new HashMap<String,HashMap<Integer,String>>();
+    hm1=new HashMap<Integer,String>();
+    for(int k=0;k<path.size();k++)
+      {
+         def b=path.get(k)
+         println b
+         def c=b.title
+         def c2=b.id
+         def b1=LogException.findAllByExpContainer(b)
+         println "------------" + b1
+         for(int j=0;j<b1.size();j++)
+              {
+                 def value=b1.get(j)
 //def b3=LogException.findById(value)
-def b4=value.expRef
+                 def b4=value.expRef
 //def b5=ExceptionRef.findById(b4)
-def b6=b4.category
-println "............" + b6
-if(hm.containsKey(b6))
+                 def b6=b4.category
+                 println "............" + b6
+                 if(hm.containsKey(b6))
 
-{
-Integer i2=hm.get(b6)
-i2++
-hm.put(b6,i2)
-}
-else
-{
-hm.put(b6,1)
-}
-}
-println hm
-if(!hm4.containsKey(color))
-{
-count3=hm.get(color)
+                     {
+                         Integer i2=hm.get(b6)
+                         i2++
+                         hm.put(b6,i2)
+                     }
+                 else
+                     {
+                         hm.put(b6,1)
+                     }
+              } 
+         println hm
+                 if(!hm4.containsKey(color))
+                     {
+                         count3=hm.get(color)
 
-arrayList.add(count3)
+                         arrayList.add(count3)
 
 //def link=g.createLink(controller : "logCase",action : "black", params : [ containerId : containerId, category : color])
-def link=g.createLink(controller : "logCase",action : "black" , params : [id : c2, case1 : a1])
-hm1.put(count3,link)
-arrayList.add(link)
+                         def link=g.createLink(controller : "logCase",action : "black" , params : [id : c2, case1 : a1])
+                         hm1.put(count3,link)
+                         arrayList.add(link)
 
-hm4.put(color,hm1)
-}
-if(!hm4.containsKey(green))
-{
-count4= hm.get(green)
+                         hm4.put(color,hm1)
+                     }
+                 if(!hm4.containsKey(green))
+                     {
+                         count4= hm.get(green)
 
-arrayList2.add(count4)
-def link=g.createLink(controller : "logCase",action : "green" , params : [id : c2, case1 : a1])
-arrayList2.add(link)
-hm22.put(count4,link)
-hm4.put(green,hm22)
-}
-if(!hm4.containsKey(red))
-{
-count5=hm.get(red)
-arrayList3.add(count5)
-def link=g.createLink(controller : "logCase",action : "red" , params : [id : c2, case1 : a1])
-arrayList3.add(link)
-hm33.put(count5,link)
-hm4.put(red,hm33)
-}
+                         arrayList2.add(count4)
+                         def link=g.createLink(controller : "logCase",action : "green" , params : [id : c2, case1 : a1])
+                         arrayList2.add(link)
+                         hm22.put(count4,link)
+                         hm4.put(green,hm22)
+                    }
+                if(!hm4.containsKey(red))
+                    {
+                         count5=hm.get(red)
+                         arrayList3.add(count5)
+                         def link=g.createLink(controller : "logCase",action : "red" , params : [id : c2, case1 : a1])
+                         arrayList3.add(link)
+                         hm33.put(count5,link)
+                         hm4.put(red,hm33)
+                    }
 
-println arrayList
+                         println arrayList
 
-out.put(c,hm4)
-hm=new HashMap<String,Integer>();
-hm4=new HashMap<String,Integer>();
-hm1=new HashMap<Integer,String>();
-hm22=new HashMap<Integer,String>();
-hm33=new HashMap<Integer,String>();
+                         out.put(c,hm4)
+                         hm=new HashMap<String,Integer>();
+                         hm4=new HashMap<String,Integer>();
+                         hm1=new HashMap<Integer,String>();
+                         hm22=new HashMap<Integer,String>();
+                         hm33=new HashMap<Integer,String>();
 
-arrayList=new ArrayList<Object>();
-arrayList2=new ArrayList<Object>();
-arrayList3=new ArrayList<Object>();
-hm.put(green,0)
-hm.put(red,0)
-hm.put("BLACK",0)
+                         arrayList=new ArrayList<Object>();
+                         arrayList2=new ArrayList<Object>();
+                         arrayList3=new ArrayList<Object>();
+                         hm.put(green,0)
+                         hm.put(red,0)
+                         hm.put("BLACK",0)
 }
 println out
-Map<String, Float> map = new TreeMap<String, Float>(out);
-[result:map]
+                         Map<String, Float> map = new TreeMap<String, Float>(out);
+                         [result:map]
 //return new ModelAndView("/logCase/get",[logCase :a])
 }
 def page1(LogCase logCaseInstance)
 {
-def a=params.id
-//def a1=params.caseno
-//def a3=a1
-def logCaseInstance3=logCaseInstance.id
-def a1=logCaseInstance3
-def ticket=logCaseInstance.ticketUrl
-def logCaseInstance1= logCaseInstance.product
-def logCaseInstance2= logCaseInstance.uploadedFilePath
+     def a=params.id
+     def logCaseInstance3=logCaseInstance.id
+     def a1=logCaseInstance3
+     def ticket=logCaseInstance.ticketUrl
+     def logCaseInstance1= logCaseInstance.product
+     def logCaseInstance2= logCaseInstance.uploadedFilePath
 
 //HashMap<String,Integer> hm=new HashMap<String,Integer>();
 //HashMap<Object,HashMap<String,ArrayList>> out=new HashMap<String,HashMap<String,ArrayList>>();
 //HashMap<String,ArrayList> hm4=new HashMap<String,ArrayList>();
- HashMap<String,HashMap<String,HashMap<Integer,String>>> out=new HashMap<String,HashMap<String,HashMap<Integer,String>>>();
-    HashMap<String,Integer> hm=new HashMap<String,Integer>();
-    HashMap<String,HashMap<Integer,String>> hm4=new HashMap<String,HashMap<Integer,String>>();
- HashMap<Integer,String> hm1=new HashMap<Integer,String>();
- HashMap<Integer,String> hm22=new HashMap<Integer,String>();
- HashMap<Integer,String> hm33=new HashMap<Integer,String>();
+     HashMap<String,HashMap<String,HashMap<Integer,String>>> out=new HashMap<String,HashMap<String,HashMap<Integer,String>>>();
+     HashMap<String,Integer> hm=new HashMap<String,Integer>();
+     HashMap<String,HashMap<Integer,String>> hm4=new HashMap<String,HashMap<Integer,String>>();
+     HashMap<Integer,String> hm1=new HashMap<Integer,String>();
+     HashMap<Integer,String> hm22=new HashMap<Integer,String>();
+     HashMap<Integer,String> hm33=new HashMap<Integer,String>();
 
-ArrayList<Object> arrayList=new ArrayList<Object>();
-ArrayList<Object> arrayList2=new ArrayList<Object>();
-ArrayList<Object> arrayList3=new ArrayList<Object>();
-String color="BLACK"
-String red="red"
-String green="green"
-int count3=0;
-int count4=0;
-int count5=0;
-hm.put("green",0)
-hm.put("red",0)
-hm.put("BLACK",0)
+     ArrayList<Object> arrayList=new ArrayList<Object>();
+     ArrayList<Object> arrayList2=new ArrayList<Object>();
+     ArrayList<Object> arrayList3=new ArrayList<Object>();
+     String color="BLACK"
+     String red="red"
+     String green="green"
+     int count3=0;
+     int count4=0;
+     int count5=0;
+     hm.put("green",0)
+     hm.put("red",0)
+     hm.put("BLACK",0)
 
-def path=ExpContainer.findAllByLogCase(logCaseInstance)
-println "-------------" + path
+     def path=ExpContainer.findAllByLogCase(logCaseInstance)
+     println "-------------" + path
 //arrayList.add(logCaseInstance1)
 //arrayList.add(a1)
 //hm4.put(logCaseInstance1,arrayList)
 
-hm1.put("key",logCaseInstance3)
-hm4.put(color,hm1)
-out.put("0",hm4)
-hm4=new HashMap<String,HashMap<Integer,String>>();
-hm1=new HashMap<Integer,String>();
-hm1.put("key1",ticket)
-hm4.put(red,hm1)
-out.put("1",hm4)
-hm4=new HashMap<String,HashMap<Integer,String>>();
-hm1=new HashMap<Integer,String>();
-for(int k=0;k<path.size();k++)
-{
-def b=path.get(k)
-println b
-def c=b.title
-def c2=b.id
-def b1=LogException.findAllByExpContainer(b)
-println "------------" + b1
-for(int j=0;j<b1.size();j++)
-{
-def value=b1.get(j)
+     hm1.put("key",logCaseInstance3)
+     hm4.put(color,hm1)
+     out.put("0",hm4)
+     hm4=new HashMap<String,HashMap<Integer,String>>();
+     hm1=new HashMap<Integer,String>();
+     hm1.put("key1",ticket)
+     hm4.put(red,hm1)
+     out.put("1",hm4)
+     hm4=new HashMap<String,HashMap<Integer,String>>();
+     hm1=new HashMap<Integer,String>();
+          for(int k=0;k<path.size();k++)
+              {
+                  def b=path.get(k)
+                  println b
+                  def c=b.title
+                  def c2=b.id
+                  def b1=LogException.findAllByExpContainer(b)
+                  println "------------" + b1
+                  for(int j=0;j<b1.size();j++)
+                     {
+                          def value=b1.get(j)
 //def b3=LogException.findById(value)
-def b4=value.expRef
+                          def b4=value.expRef
 //def b5=ExceptionRef.findById(b4)
-def b6=b4.category
-println "............" + b6
-if(hm.containsKey(b6))
+                          def b6=b4.category
+                          println "............" + b6
+                          if(hm.containsKey(b6))
 
-{
-Integer i2=hm.get(b6)
-i2++
-hm.put(b6,i2)
-}
-else
-{
-hm.put(b6,1)
-}
-}
-println hm
-if(!hm4.containsKey(color))
-{
-count3=hm.get(color)
+                             {
+                                  Integer i2=hm.get(b6)
+                                  i2++
+                                  hm.put(b6,i2)
+                             }
+                           else
+                             {
+                                   hm.put(b6,1)
+                             }
+                      }
+      println hm
+                           if(!hm4.containsKey(color))
+                             {
+                               count3=hm.get(color)
 
-arrayList.add(count3)
+                               arrayList.add(count3)
 
 //def link=g.createLink(controller : "logCase",action : "black", params : [ containerId : containerId, category : color])
-def link=g.createLink(controller : "logCase",action : "black" , params : [id : c2, case1 : a1])
-hm1.put(count3,link)
-arrayList.add(link)
+                               def link=g.createLink(controller : "logCase",action : "black" , params : [id : c2, case1 : a1])
+                               hm1.put(count3,link)
+                               arrayList.add(link)
 
-hm4.put(color,hm1)
-}
-if(!hm4.containsKey(green))
-{
-count4= hm.get(green)
+                               hm4.put(color,hm1)
+                            }
+                          if(!hm4.containsKey(green))
+                            {
+                               count4= hm.get(green)
 
-arrayList2.add(count4)
-def link=g.createLink(controller : "logCase",action : "green" , params : [id : c2, case1 : a1])
-arrayList2.add(link)
-hm22.put(count4,link)
-hm4.put(green,hm22)
-}
-if(!hm4.containsKey(red))
-{
-count5=hm.get(red)
-arrayList3.add(count5)
-def link=g.createLink(controller : "logCase",action : "red" , params : [id : c2, case1 : a1])
-arrayList3.add(link)
-hm33.put(count5,link)
-hm4.put(red,hm33)
-}
+                               arrayList2.add(count4)
+                               def link=g.createLink(controller : "logCase",action : "green" , params : [id : c2, case1 : a1])
+                               arrayList2.add(link)
+                               hm22.put(count4,link)
+                               hm4.put(green,hm22)
+                            }
+                         if(!hm4.containsKey(red))
+                            {
+                               count5=hm.get(red)
+                               arrayList3.add(count5)
+                               def link=g.createLink(controller : "logCase",action : "red" , params : [id : c2, case1 : a1])
+                               arrayList3.add(link)
+                               hm33.put(count5,link)
+                               hm4.put(red,hm33)
+                            }
 
-println arrayList
+                               println arrayList
 
-out.put(c,hm4)
-hm=new HashMap<String,Integer>();
-hm4=new HashMap<String,Integer>();
-hm1=new HashMap<Integer,String>();
-hm22=new HashMap<Integer,String>();
-hm33=new HashMap<Integer,String>();
+                               out.put(c,hm4)
+                               hm=new HashMap<String,Integer>();
+                               hm4=new HashMap<String,Integer>();
+                               hm1=new HashMap<Integer,String>();
+                               hm22=new HashMap<Integer,String>();
+                               hm33=new HashMap<Integer,String>();
 
-arrayList=new ArrayList<Object>();
-arrayList2=new ArrayList<Object>();
-arrayList3=new ArrayList<Object>();
-hm.put(green,0)
-hm.put(red,0)
-hm.put("BLACK",0)
+                               arrayList=new ArrayList<Object>();
+                               arrayList2=new ArrayList<Object>();
+                               arrayList3=new ArrayList<Object>();
+                               hm.put(green,0)
+                               hm.put(red,0)
+                               hm.put("BLACK",0)
 }
 println out
 Map<String, Float> map = new TreeMap<String, Float>(out);
@@ -651,130 +649,130 @@ Map<String, Float> map = new TreeMap<String, Float>(out);
 }
 def summary(Integer id)
 {
-def a=params.id
-def a1=params.caseno
+       def a=params.id
+       def a1=params.caseno
 //def a3=case1
-def logCaseInstance=LogCase.findById(id)
-def ticket=logCaseInstance.ticketUrl
-def log=logCaseInstance.id
-def logCaseInstance1= logCaseInstance.product
-def logCaseInstance2= logCaseInstance.uploadedFilePath
+       def logCaseInstance=LogCase.findById(id)
+       def ticket=logCaseInstance.ticketUrl
+       def log=logCaseInstance.id
+       def logCaseInstance1= logCaseInstance.product
+       def logCaseInstance2= logCaseInstance.uploadedFilePath
 
 //HashMap<String,Integer> hm=new HashMap<String,Integer>();
 //HashMap<Object,HashMap<String,ArrayList>> out=new HashMap<String,HashMap<String,ArrayList>>();
 //HashMap<String,ArrayList> hm4=new HashMap<String,ArrayList>();
- HashMap<String,HashMap<String,HashMap<Integer,String>>> out=new HashMap<String,HashMap<String,HashMap<Integer,String>>>();
-    HashMap<String,Integer> hm=new HashMap<String,Integer>();
-    HashMap<String,HashMap<Integer,String>> hm4=new HashMap<String,HashMap<Integer,String>>();
- HashMap<Integer,String> hm1=new HashMap<Integer,String>();
- HashMap<Integer,String> hm22=new HashMap<Integer,String>();
- HashMap<Integer,String> hm33=new HashMap<Integer,String>();
+       HashMap<String,HashMap<String,HashMap<Integer,String>>> out=new HashMap<String,HashMap<String,HashMap<Integer,String>>>();
+       HashMap<String,Integer> hm=new HashMap<String,Integer>();
+       HashMap<String,HashMap<Integer,String>> hm4=new HashMap<String,HashMap<Integer,String>>();
+       HashMap<Integer,String> hm1=new HashMap<Integer,String>();
+       HashMap<Integer,String> hm22=new HashMap<Integer,String>();
+       HashMap<Integer,String> hm33=new HashMap<Integer,String>();
 
-ArrayList<Object> arrayList=new ArrayList<Object>();
-ArrayList<Object> arrayList2=new ArrayList<Object>();
-ArrayList<Object> arrayList3=new ArrayList<Object>();
-String color="BLACK"
-String red="red"
-String green="green"
-int count3=0;
-int count4=0;
-int count5=0;
-hm.put("green",0)
-hm.put("red",0)
-hm.put("BLACK",0)
-def path=ExpContainer.findAllByLogCase(logCaseInstance)
-println "-------------" + path
+       ArrayList<Object> arrayList=new ArrayList<Object>();
+       ArrayList<Object> arrayList2=new ArrayList<Object>();
+       ArrayList<Object> arrayList3=new ArrayList<Object>();
+       String color="BLACK"
+       String red="red"
+       String green="green"
+       int count3=0;
+       int count4=0;
+       int count5=0;
+       hm.put("green",0)
+       hm.put("red",0)
+       hm.put("BLACK",0)
+       def path=ExpContainer.findAllByLogCase(logCaseInstance)
+       println "-------------" + path
 //arrayList.add(logCaseInstance1)
 //arrayList.add(a1)
 //hm4.put(logCaseInstance1,arrayList)
 
-hm1.put("key",log)
-hm4.put(color,hm1)
-out.put("0",hm4)
-hm4=new HashMap<String,HashMap<Integer,String>>();
-hm1=new HashMap<Integer,String>();
-hm1.put("key1",ticket)
-hm4.put(red,hm1)
-out.put("1",hm4)
-hm4=new HashMap<String,HashMap<Integer,String>>();
-hm1=new HashMap<Integer,String>();
-for(int k=0;k<path.size();k++)
-{
-def b=path.get(k)
-println b
-def c=b.title
-def c2=b.id
-def b1=LogException.findAllByExpContainer(b)
-println "------------" + b1
-for(int j=0;j<b1.size();j++)
-{
-def value=b1.get(j)
+       hm1.put("key",log)
+       hm4.put(color,hm1)
+       out.put("0",hm4)
+       hm4=new HashMap<String,HashMap<Integer,String>>();
+       hm1=new HashMap<Integer,String>();
+       hm1.put("key1",ticket)
+       hm4.put(red,hm1)
+       out.put("1",hm4)
+       hm4=new HashMap<String,HashMap<Integer,String>>();
+       hm1=new HashMap<Integer,String>();
+       for(int k=0;k<path.size();k++)
+              {
+                   def b=path.get(k)
+                   println b
+                   def c=b.title
+                   def c2=b.id
+                   def b1=LogException.findAllByExpContainer(b)
+                   println "------------" + b1
+                   for(int j=0;j<b1.size();j++)
+                      {
+                         def value=b1.get(j)
 //def b3=LogException.findById(value)
-def b4=value.expRef
+                         def b4=value.expRef
 //def b5=ExceptionRef.findById(b4)
-def b6=b4.category
-println "............" + b6
-if(hm.containsKey(b6))
+                         def b6=b4.category
+                         println "............" + b6
+                         if(hm.containsKey(b6))
 
-{
-Integer i2=hm.get(b6)
-i2++
-hm.put(b6,i2)
-}
-else
-{
-hm.put(b6,1)
-}
-}
-println hm
-if(!hm4.containsKey(color))
-{
-count3=hm.get(color)
+                           {
+                                Integer i2=hm.get(b6)
+                                i2++
+                                hm.put(b6,i2)
+                           }
+                         else
+                           {
+                                hm.put(b6,1)
+                           }
+                        }
+                      println hm
+                         if(!hm4.containsKey(color))
+                           {
+                              count3=hm.get(color)
 
-arrayList.add(count3)
+                              arrayList.add(count3)
 
 //def link=g.createLink(controller : "logCase",action : "black", params : [ containerId : containerId, category : color])
-def link=g.createLink(controller : "logCase",action : "black" , params : [id : c2, case1 : id])
-hm1.put(count3,link)
-arrayList.add(link)
+                              def link=g.createLink(controller : "logCase",action : "black" , params : [id : c2, case1 : id])
+                              hm1.put(count3,link)
+                              arrayList.add(link)
 
-hm4.put(color,hm1)
-}
-if(!hm4.containsKey(green))
-{
-count4= hm.get(green)
+                              hm4.put(color,hm1)
+                           }
+                         if(!hm4.containsKey(green))
+                           {
+                              count4= hm.get(green)
 
-arrayList2.add(count4)
-def link=g.createLink(controller : "logCase",action : "green" , params : [id : c2,case1 :id])
-arrayList2.add(link)
-hm22.put(count4,link)
-hm4.put(green,hm22)
-}
-if(!hm4.containsKey(red))
-{
-count5=hm.get(red)
-arrayList3.add(count5)
-def link=g.createLink(controller : "logCase",action : "red" , params : [id : c2,case1 :id])
-arrayList3.add(link)
-hm33.put(count5,link)
-hm4.put(red,hm33)
-}
+                              arrayList2.add(count4)
+                              def link=g.createLink(controller : "logCase",action : "green" , params : [id : c2,case1 :id])
+                              arrayList2.add(link)
+                              hm22.put(count4,link)
+                              hm4.put(green,hm22)
+                           }
+                         if(!hm4.containsKey(red))
+                           {
+                              count5=hm.get(red)
+                              arrayList3.add(count5)
+                              def link=g.createLink(controller : "logCase",action : "red" , params : [id : c2,case1 :id])
+                              arrayList3.add(link)
+                              hm33.put(count5,link)
+                              hm4.put(red,hm33)
+                           }
 
 println arrayList
 
-out.put(c,hm4)
-hm=new HashMap<String,Integer>();
-hm4=new HashMap<String,Integer>();
-hm1=new HashMap<Integer,String>();
-hm22=new HashMap<Integer,String>();
-hm33=new HashMap<Integer,String>();
+                              out.put(c,hm4)
+                              hm=new HashMap<String,Integer>();
+                              hm4=new HashMap<String,Integer>();
+                              hm1=new HashMap<Integer,String>();
+                              hm22=new HashMap<Integer,String>();
+                              hm33=new HashMap<Integer,String>();
 
-arrayList=new ArrayList<Object>();
-arrayList2=new ArrayList<Object>();
-arrayList3=new ArrayList<Object>();
-hm.put(green,0)
-hm.put(red,0)
-hm.put("BLACK",0)
+                              arrayList=new ArrayList<Object>();
+                              arrayList2=new ArrayList<Object>();
+                              arrayList3=new ArrayList<Object>();
+                              hm.put(green,0)
+                              hm.put(red,0)
+                              hm.put("BLACK",0)
 }
 println out
 Map<String, Float> map = new TreeMap<String, Float>(out);
@@ -783,36 +781,36 @@ Map<String, Float> map = new TreeMap<String, Float>(out);
 }
 def black(Integer id,Integer case1)
 {
-String category="BLACK"
-def black1=ExpContainer.findById(id)
-System.out.println(black1)
+     String category="BLACK"
+     def black1=ExpContainer.findById(id)
+     System.out.println(black1)
 
-def black2=black1.logException.expRefId
-HashMap<String,Object> hm=new HashMap<String,Object>();
-ArrayList<String> ar=new ArrayList<String>();
-System.out.println(black2)
-def link1=g.createLink(controller : "logCase",action : "summary", params : [ id : case1])
+     def black2=black1.logException.expRefId
+     HashMap<String,Object> hm=new HashMap<String,Object>();
+     ArrayList<String> ar=new ArrayList<String>();
+     System.out.println(black2)
+     def link1=g.createLink(controller : "logCase",action : "summary", params : [ id : case1])
 
-hm.put("1",link1)
-for(int k=0;k<black2.size();k++)
-{
-def value=black2.get(k)
-def value2=ExceptionRef.findById(value)
-println value2
-def value3=value2.id
-def value1=value2.category
-if(value1 == category)
-{
-def black3=LogException.findByExpRef(value2)
-println black3
-def u=black3.id
-def u1=black3.expRef.key
-def u2=black3.expRef
-def link=g.createLink(controller : "logCase",action : "edit1", params : [ id : u,container:id,caseId :case1])
-hm.put(u1,link);
-ar.add(u)
-}
-}
+     hm.put("1",link1)
+     for(int k=0;k<black2.size();k++)
+        {
+            def value=black2.get(k)
+            def value2=ExceptionRef.findById(value)
+            println value2
+            def value3=value2.id
+            def value1=value2.category
+            if(value1 == category)
+              {
+                   def black3=LogException.findByExpRef(value2)
+                   println black3
+                   def u=black3.id
+                   def u1=black3.expRef.key
+                   def u2=black3.expRef
+                   def link=g.createLink(controller : "logCase",action : "edit1", params : [ id : u,container:id,caseId :case1])
+                   hm.put(u1,link);
+                   ar.add(u)
+              }
+        }
 Map<String, Float> map = new TreeMap<String, Float>(hm);
 
 [black:map]
@@ -821,64 +819,64 @@ Map<String, Float> map = new TreeMap<String, Float>(hm);
 
 def green(Integer id,Integer case1)
 {
-String category="green"
-def black1=ExpContainer.findById(id)
-System.out.println(black1)
-def black2=black1.logException.expRefId
-HashMap<String,Object> hm=new HashMap<String,Object>();
+     String category="green"
+     def black1=ExpContainer.findById(id)
+     System.out.println(black1)
+     def black2=black1.logException.expRefId
+     HashMap<String,Object> hm=new HashMap<String,Object>();
 
-System.out.println(black2)
-def link1=g.createLink(controller : "logCase",action : "summary", params : [ id : case1])
-hm.put("1",link1)
-for(int k=0;k<black2.size();k++)
-{
-def value=black2.get(k)
-def value2=ExceptionRef.findById(value)
-println value2
-def value3=value2.id
-def value1=value2.category
-if(value1 == category)
-{
-def black3=LogException.findByExpRef(value2)
-def u=black3.id
-def u1=black3.expRef.key
-println black3
-def link=g.createLink(controller : "logCase",action : "edit4", params : [ id : u,container: id,caseId : case1])
-hm.put(u1,link);
-}
-}
+     System.out.println(black2)
+     def link1=g.createLink(controller : "logCase",action : "summary", params : [ id : case1])
+     hm.put("1",link1)
+     for(int k=0;k<black2.size();k++)
+        {
+           def value=black2.get(k)
+           def value2=ExceptionRef.findById(value)
+           println value2
+           def value3=value2.id
+           def value1=value2.category
+           if(value1 == category)
+             {
+                 def black3=LogException.findByExpRef(value2)
+                 def u=black3.id
+                 def u1=black3.expRef.key
+                 println black3
+                 def link=g.createLink(controller : "logCase",action : "edit4", params : [ id : u,container: id,caseId : case1])
+                 hm.put(u1,link);
+             }
+        }
 Map<String, Float> map = new TreeMap<String, Float>(hm);
 
 [black:hm]
 }
 def red(int id,Integer case1)
 {
-String category="red"
-def black1=ExpContainer.findById(id)
-System.out.println(black1)
-def black2=black1.logException.expRefId
-HashMap<String,Object> hm=new HashMap<String,Object>();
+     String category="red"
+     def black1=ExpContainer.findById(id)
+     System.out.println(black1)
+     def black2=black1.logException.expRefId
+     HashMap<String,Object> hm=new HashMap<String,Object>();
 
-System.out.println(black2)
-def link1=g.createLink(controller : "logCase",action : "summary", params : [ id : case1])
-hm.put("1",link1)
-for(int k=0;k<black2.size();k++)
-{
-def value=black2.get(k)
-def value2=ExceptionRef.findById(value)
-println value2
-def value3=value2.id
-def value1=value2.category
-if(value1 == category)
-{
-def black3=LogException.findByExpRef(value2)
-println black3
-def u=black3.id
-def u1=black3.expRef.key
-def link=g.createLink(controller : "logCase",action : "edit3", params : [ id : u,container :id,caseId :case1])
-hm.put(u1,link);
-}
-}
+     System.out.println(black2)
+     def link1=g.createLink(controller : "logCase",action : "summary", params : [ id : case1])
+     hm.put("1",link1)
+     for(int k=0;k<black2.size();k++)
+        {
+             def value=black2.get(k)
+             def value2=ExceptionRef.findById(value)
+             println value2
+             def value3=value2.id
+             def value1=value2.category
+             if(value1 == category)
+               {
+                    def black3=LogException.findByExpRef(value2)
+                    println black3
+                    def u=black3.id
+                    def u1=black3.expRef.key
+                    def link=g.createLink(controller : "logCase",action : "edit3", params : [ id : u,container :id,caseId :case1])
+                    hm.put(u1,link);
+               }
+       } 
 Map<String, Float> map = new TreeMap<String, Float>(hm);
 [black:hm]
 }
@@ -893,193 +891,201 @@ respond logCaseInstance
 }
 def edit1(int id,int container,int caseId)
 {
-HashMap<Object,Object> hm=new HashMap<String,Object>()
-def findKey=LogException.findById(id)
-println findKey
-def key=findKey.expRef
-println key
-def id1=key.id
-def kid=key.key
-println kid
-def frequency=findKey.frequency
-println frequency
-def folder=findKey.expContainer
-println folder
-def name=folder.title
-def case1=folder.logCase.id
-println name
-def key1=kid.trim()
-def a=ExceptionRef.findByKey(key1)
-def a1=a.category
+     HashMap<Object,Object> hm=new HashMap<String,Object>()
+     def findKey=LogException.findById(id)
+     println findKey
+     def key=findKey.expRef
+     println key
+     def id1=key.id
+     def kid=key.key
+     println kid
+     def frequency=findKey.frequency
+     println frequency
+     def folder=findKey.expContainer
+     println folder
+     def name=folder.title
+     def case1=folder.logCase.id
+     println name
+     def key1=kid.trim()
+     def a=ExceptionRef.findByKey(key1)
+     def a1=a.category
 println a1
-def a2=a.description
-def a3=a.resolution
-def a4=a.product
-def link=g.createLink(controller : "logCase",action : "update1", params : [ id : id1,caseId : caseId])
+     def a2=a.description
+     def a3=a.resolution
+     def a4=a.product
+     def currentFolder=ExpContainer.findById(container)
+     def currentFolder1=currentFolder.title
+     def link=g.createLink(controller : "logCase",action : "update1", params : [ id : id1,caseId : caseId])
 //hm.put("ledit",link)
-def link1=g.createLink(controller : "logCase",action : "black", params : [ id : container,case1 : caseId ])
-hm.put("1",link1)
-hm.put("key",key1)
-hm.put("frequency",frequency)
-hm.put("Folder name",name)
-hm.put("Case id",a1)
-hm.put("category",case1)
-hm.put("description",a2)
-hm.put("resolution",a3)
-hm.put("product",link)
-hm.put("pproduct",a4)
-println hm
+     def link1=g.createLink(controller : "logCase",action : "black", params : [ id : container,case1 : caseId ])
+     hm.put("1",link1)
+     hm.put("key",key1)
+     hm.put("frequency",frequency)
+     hm.put("Folder name",currentFolder1)
+     hm.put("Case id",a1)
+     hm.put("category",caseId)
+     hm.put("description",a2)
+     hm.put("resolution",a3)
+     hm.put("product",link)
+     hm.put("pproduct",a4)
+     println hm
 //def link=g.createLink(controller : "ExceptionRef",action : "edit", params : [ id : id1])
 //hm.put("ledit",link)
-[hm:hm]
+     [hm:hm]
 
 }
 def update1(int id,int caseId)
 {
-def ref=ExceptionRef.findById(id)
-def key=ref.key
-def product=ref.product
-def description=ref.description
-def category=ref.category
-def resolution=ref.resolution
-HashMap<String,Object> hm=new HashMap<String,Object>();
-hm.put("1",key)
-hm.put("2",product)
-hm.put("3",category)
-hm.put("4",description)
-hm.put("5",resolution)
-hm.put("6",caseId)
-hm.put("7",id)
-println hm
-Map<String, Float> map = new TreeMap<String, Float>(hm);
-[black:hm]
+    def ref=ExceptionRef.findById(id)
+    def key=ref.key
+    def product=ref.product
+    def description=ref.description
+    def category=ref.category
+    def resolution=ref.resolution
+    HashMap<String,Object> hm=new HashMap<String,Object>();
+    hm.put("1",key)
+    hm.put("2",product)
+    hm.put("3",category)
+    hm.put("4",description)
+    hm.put("5",resolution)
+    hm.put("6",caseId)
+    hm.put("7",id)
+    println hm
+    Map<String, Float> map = new TreeMap<String, Float>(hm);
+    [black:hm]
 }
 def update2()
 {
 //def key=params.key
-def category=params.category
-def description=params.description
-def resolution=params.resolution
+    def category=params.category
+    def description=params.description
+    def resolution=params.resolution
 //def product=params.product.id
-def caseId=params.caseId
-def id=params.ref
-println "+++++++++++" + caseId
-println "__________" + id
+    def caseId=params.caseId
+    def id=params.ref
+    println "+++++++++++" + caseId
+    println "__________" + id
 //println "+++++" +key
 
-def ref1=ExceptionRef.findById(id)
-def product2=ref1.product
+    def ref1=ExceptionRef.findById(id)
+    def product2=ref1.product
 //def pro=Product.findById(product)
 //def pro1=pro.name
 //def pro2=pro.version
 //def pro3=pro1 +"-"+pro2
-def key=ref1.key
-ref1.category=category;
-ref1.description=description;
-ref1.product=product2;
-ref1.resolution=resolution;
-ref1.save()
-def ref2=ExceptionRef.findById(id)
-def category1=ref2.category
-def description1=ref2.description
-def resolution1=ref2.resolution
-def link=g.createLink(controller : "logCase",action : "summary", params : [ id : caseId])
-HashMap<String,Object> hm =new HashMap<String,Object>();
-hm.put("0",link)
-hm.put("1",key)
-hm.put("2",category1)
-hm.put("3",description1)
-hm.put("4",resolution1)
-hm.put("5",product2)
-println "======" + category1
-Map<String, Float> map = new TreeMap<String, Float>(hm);
-[black:hm]
+     def key=ref1.key
+     ref1.category=category;
+     ref1.description=description;
+     ref1.product=product2;
+     ref1.resolution=resolution;
+     ref1.save()
+     def ref2=ExceptionRef.findById(id)
+     def category1=ref2.category
+     def description1=ref2.description
+     def resolution1=ref2.resolution
+     def link=g.createLink(controller : "logCase",action : "summary", params : [ id : caseId])
+     HashMap<String,Object> hm =new HashMap<String,Object>();
+     hm.put("0",link)
+     hm.put("1",key)
+     hm.put("2",category1)
+     hm.put("3",description1)
+     hm.put("4",resolution1)
+     hm.put("5",product2)
+     println "======" + category1
+     Map<String, Float> map = new TreeMap<String, Float>(hm);
+     [black:hm]
 
 }
 def edit4(int id,int container,int caseId)
 {
-HashMap<Object,Object> hm=new HashMap<String,Object>()
-def findKey=LogException.findById(id)
-println findKey
-def key=findKey.expRef
-println key
-def id1=key.id
-def kid=key.key
-println kid
-def frequency=findKey.frequency
-println frequency
-def folder=findKey.expContainer
-println folder
-def name=folder.title
-def case1=folder.logCase.id
-println name
-def key1=kid.trim()
-def a=ExceptionRef.findByKey(key1)
-def a1=a.category
-println a1
-def a2=a.description
-def a3=a.resolution
-def a4=a.product
-def link=g.createLink(controller : "logCase",action : "update1", params : [ id : id1,caseId : caseId])
+     HashMap<Object,Object> hm=new HashMap<String,Object>()
+     def findKey=LogException.findById(id)
+     println findKey
+     def key=findKey.expRef
+     println key
+     def id1=key.id
+     def kid=key.key
+     println kid
+     def frequency=findKey.frequency
+     println frequency
+     def folder=findKey.expContainer
+     println folder
+     def name=folder.title
+     def case1=folder.logCase.id
+     println name
+     def key1=kid.trim()
+     def a=ExceptionRef.findByKey(key1)
+     def a1=a.category
+     println a1
+     def currentFolder=ExpContainer.findById(container)
+     def currentFolder1=currentFolder.title
+
+     def a2=a.description
+     def a3=a.resolution
+     def a4=a.product
+     def link=g.createLink(controller : "logCase",action : "update1", params : [ id : id1,caseId : caseId])
 //hm.put("ledit",link)
-def link1=g.createLink(controller : "logCase",action : "green", params : [ id : container,case1 : caseId ])
-hm.put("1",link1)
-hm.put("key",key1)
-hm.put("frequency",frequency)
-hm.put("Folder name",name)
-hm.put("Case id",a1)
-hm.put("category",case1)
-hm.put("description",a2)
-hm.put("resolution",a3)
-hm.put("product",link)
-hm.put("pproduct",a4)
-println hm
+     def link1=g.createLink(controller : "logCase",action : "green", params : [ id : container,case1 : caseId ])
+     hm.put("1",link1)
+     hm.put("key",key1)
+     hm.put("frequency",frequency)
+     hm.put("Folder name",currentFolder1)
+     hm.put("Case id",a1)
+     hm.put("category",caseId)
+     hm.put("description",a2)
+     hm.put("resolution",a3)
+     hm.put("product",link)
+     hm.put("pproduct",a4)
+     println hm
 //def link=g.createLink(controller : "ExceptionRef",action : "edit", params : [ id : id1])
 //hm.put("ledit",link)
-[hm:hm]
+     [hm:hm]
 
 }
 def edit3(int id,int container,int caseId)
 {
-HashMap<Object,Object> hm=new HashMap<String,Object>()
-def findKey=LogException.findById(id)
-println findKey
-def key=findKey.expRef
-println key
-def id1=key.id
-def kid=key.key
-println kid
-def frequency=findKey.frequency
-println frequency
-def folder=findKey.expContainer
-println folder
-def name=folder.title
-def case1=folder.logCase.id
-println name
-def key1=kid.trim()
-def a=ExceptionRef.findByKey(key1)
-def a1=a.category
-println a1
-def a2=a.description
-def a3=a.resolution
-def a4=a.product
-def link=g.createLink(controller : "logCase",action : "update1", params : [ id : id1,caseId : caseId])
+     HashMap<Object,Object> hm=new HashMap<String,Object>()
+     def findKey=LogException.findById(id)
+     println findKey
+     def key=findKey.expRef
+     println key
+     def id1=key.id
+     def kid=key.key
+     println kid
+     def frequency=findKey.frequency
+     println frequency
+     def folder=findKey.expContainer
+     println folder
+     def name=folder.title
+     def case1=folder.logCase.id
+     println name
+     def key1=kid.trim()
+     def a=ExceptionRef.findByKey(key1)
+     def a1=a.category
+     println a1
+     def a2=a.description
+     def a3=a.resolution
+     def a4=a.product
+     def currentFolder=ExpContainer.findById(container)
+     def currentFolder1=currentFolder.title
+
+     def link=g.createLink(controller : "logCase",action : "update1", params : [ id : id1,caseId : caseId])
 //hm.put("ledit",link)
-def link1=g.createLink(controller : "logCase",action : "red", params : [ id : container,case1 : caseId ])
-hm.put("1",link1)
-hm.put("key",key1)
-hm.put("frequency",frequency)
-hm.put("Folder name",name)
-hm.put("Case id",a1)
-hm.put("category",case1)
-hm.put("description",a2)
-hm.put("resolution",a3)
-hm.put("product",link)
-hm.put("pproduct",a4)
-println hm
+     def link1=g.createLink(controller : "logCase",action : "red", params : [ id : container,case1 : caseId ])
+     hm.put("1",link1)
+     hm.put("key",key1)
+     hm.put("frequency",frequency)
+     hm.put("Folder name",currentFolder1)
+     hm.put("Case id",a1)
+     hm.put("category",caseId)
+     hm.put("description",a2)
+     hm.put("resolution",a3)
+     hm.put("product",link)
+     hm.put("pproduct",a4)
+     println hm
 //def link=g.createLink(controller : "ExceptionRef",action : "edit", params : [ id : id1])
 //hm.put("ledit",link)
-[hm:hm]
+     [hm:hm]
 
 }
 
