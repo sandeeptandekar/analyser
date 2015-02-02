@@ -15,6 +15,7 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
 <li><g:each in="${black}" var="ana"><g:if test="${ana.key == '1'}"><a href="${ana.value}"> Back</a></g:if></g:each></li>
+ <li><g:each in="${black}" var="ana"><g:if test="${ana.key == 'ticket'}"><a href="${ana.value}">Ticket Url</a></g:if></g:each></li>
 
 </ul>
 		</div>
@@ -29,13 +30,17 @@
        <g:each in="${black}" var="ana">
 <g:if test="${ana.key =='1'}">
 </g:if>
-<g:else>          
+<g:else>  
+<g:if test="${ana.key =='ticket'}">
+</g:if>
+<g:else>        
 <ul>
 <li class="fieldcontain" >           
           <a class="property-value" href=${ana.value}>${ana.key}</a>
            
 </li>
 </ul>
+</g:else>
 </g:else>       
         </g:each>
           </ol>

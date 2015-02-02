@@ -800,7 +800,8 @@ def black(Integer id,Integer case1)
      String category="BLACK"
      def black1=ExpContainer.findById(id)
      System.out.println(black1)
-
+     def case2=LogCase.findById(case1)
+     def ticket=case2.ticketUrl
      def black2=black1.logException.expRefId
      HashMap<String,Object> hm=new HashMap<String,Object>();
      ArrayList<String> ar=new ArrayList<String>();
@@ -808,6 +809,7 @@ def black(Integer id,Integer case1)
      def link1=g.createLink(controller : "logCase",action : "summary", params : [ id : case1])
 
      hm.put("1",link1)
+     hm.put("ticket",ticket)
      for(int k=0;k<black2.size();k++)
         {
             def value=black2.get(k)
@@ -824,6 +826,7 @@ def black(Integer id,Integer case1)
                    def u2=black3.expRef
                    def link=g.createLink(controller : "logCase",action : "edit1", params : [ id : u,container:id,caseId :case1])
                    hm.put(u1,link);
+                   
                    ar.add(u)
               }
         }
@@ -839,11 +842,15 @@ def green(Integer id,Integer case1)
      def black1=ExpContainer.findById(id)
      System.out.println(black1)
      def black2=black1.logException.expRefId
+     def case2=LogCase.findById(case1)
+     def ticket=case2.ticketUrl
+
      HashMap<String,Object> hm=new HashMap<String,Object>();
 
      System.out.println(black2)
      def link1=g.createLink(controller : "logCase",action : "summary", params : [ id : case1])
      hm.put("1",link1)
+     hm.put("ticket",ticket)
      for(int k=0;k<black2.size();k++)
         {
            def value=black2.get(k)
@@ -871,11 +878,16 @@ def red(int id,Integer case1)
      def black1=ExpContainer.findById(id)
      System.out.println(black1)
      def black2=black1.logException.expRefId
+     def case2=LogCase.findById(case1)
+     def ticket=case2.ticketUrl
+
      HashMap<String,Object> hm=new HashMap<String,Object>();
 
      System.out.println(black2)
      def link1=g.createLink(controller : "logCase",action : "summary", params : [ id : case1])
      hm.put("1",link1)
+     hm.put("ticket",ticket)
+
      for(int k=0;k<black2.size();k++)
         {
              def value=black2.get(k)
@@ -908,6 +920,9 @@ respond logCaseInstance
 def edit1(int id,int container,int caseId)
 {
      HashMap<Object,Object> hm=new HashMap<String,Object>()
+     def case2=LogCase.findById(caseId)
+     def ticket=case2.ticketUrl
+
      def findKey=LogException.findById(id)
      println findKey
      def key=findKey.expRef
@@ -935,6 +950,7 @@ println a1
 //hm.put("ledit",link)
      def link1=g.createLink(controller : "logCase",action : "black", params : [ id : container,case1 : caseId ])
      hm.put("1",link1)
+     hm.put("ticket",ticket)
      hm.put("key",key1)
      hm.put("frequency",frequency)
      hm.put("Folder name",currentFolder1)
@@ -958,7 +974,11 @@ def update1(int id,int caseId)
     def description=ref.description
     def category=ref.category
     def resolution=ref.resolution
+    def case2=LogCase.findById(caseId)
+    def ticket=case2.ticketUrl
+
     HashMap<String,Object> hm=new HashMap<String,Object>();
+    hm.put("ticket",ticket)
     hm.put("1",key)
     hm.put("2",product)
     hm.put("3",category)
@@ -1015,6 +1035,9 @@ def update2()
 def edit4(int id,int container,int caseId)
 {
      HashMap<Object,Object> hm=new HashMap<String,Object>()
+     def case2=LogCase.findById(caseId)
+     def ticket=case2.ticketUrl
+
      def findKey=LogException.findById(id)
      println findKey
      def key=findKey.expRef
@@ -1042,6 +1065,7 @@ def edit4(int id,int container,int caseId)
      def link=g.createLink(controller : "logCase",action : "update1", params : [ id : id1,caseId : caseId])
 //hm.put("ledit",link)
      def link1=g.createLink(controller : "logCase",action : "green", params : [ id : container,case1 : caseId ])
+     hm.put("ticket",ticket)
      hm.put("1",link1)
      hm.put("key",key1)
      hm.put("frequency",frequency)
@@ -1061,6 +1085,9 @@ def edit4(int id,int container,int caseId)
 def edit3(int id,int container,int caseId)
 {
      HashMap<Object,Object> hm=new HashMap<String,Object>()
+     def case2=LogCase.findById(caseId)
+     def ticket=case2.ticketUrl
+
      def findKey=LogException.findById(id)
      println findKey
      def key=findKey.expRef
@@ -1088,6 +1115,7 @@ def edit3(int id,int container,int caseId)
      def link=g.createLink(controller : "logCase",action : "update1", params : [ id : id1,caseId : caseId])
 //hm.put("ledit",link)
      def link1=g.createLink(controller : "logCase",action : "red", params : [ id : container,case1 : caseId ])
+     hm.put("ticket",ticket)
      hm.put("1",link1)
      hm.put("key",key1)
      hm.put("frequency",frequency)
