@@ -132,15 +132,31 @@ def test()
 try
 {
        File root=new File("/home/kavitha/project/files");
+       def find=root.getAbsolutePath();
+      
        Date date = new Date();
+      
        String d =date.getTime().toString();
+       
        File f=new File(root,d)
+       
        f.mkdir();
+        //FileUtils.forceMkdir(f);
+       String path2=f.getAbsolutePath();
+       
        File f1=new File(f,params.qqfile)
+      
+        def p=params.qqfile
+       println p
        f1.createNewFile();
+       String path1=f1.getAbsolutePath();
+       println path1
        InputStream inputStream = selectInputStream(request)
+      
        ajaxUploaderService.upload(inputStream,f1)
+      
        String path=f.getAbsolutePath();
+       
        return render(text: [success:true, filePath:path] as JSON, contentType:'text/html')
 }
 catch (FileUploadException e) {
