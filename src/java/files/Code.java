@@ -69,7 +69,7 @@ File parentDir = new File(path);
 			}
 		}
 }
-//It gives the file ending with .log extension
+//This method returns a hashMap that as key as file path of the folders and value as the new file created for that folder with all thelog files content.For each folder a new file will be created and that file is stored as value for that folder.
 public HashMap<String,String> getAllLogFiles(File mainFolder,String path) throws IOException,NullPointerException
 {
 ArrayList<String> data = new ArrayList<String>();
@@ -143,7 +143,7 @@ inputChannel.close();
 outputChannel.close();
 
                 hm15.put(new1,absoluteFilePath);
-                        //System.out.println(absoluteFilePath5);
+                       
 }		}
 else
 {
@@ -151,8 +151,7 @@ else
   
 }
 }
-//inputChannel.close();
-//outputChannel.close();
+
 }	
 		
 //System.out.println(data);
@@ -164,19 +163,15 @@ else
 
 		return hm15;
 	}
-//This method returns a ArrayList of hashmap
+//This method returns a list of lists of each folder.
 	public List<Object> parseLogFiles(File mainFolder,String path)
 			throws IOException {
-//ArrayList<String> logFiles=path;//".log" files are stored in arraylist
-List<Object> hmArray=new ArrayList<Object>();
-	
-		//for (String filePath : logFiles) {
-			List<Object> hm2 = parseSingleLogFile(path);
-			hmArray.addAll(hm2);//list of hashmaps are stored in Arraylist
-			 //}
-//System.out.println(hmArray);
+                        List<Object> hmArray=new ArrayList<Object>();
+                        List<Object> hm2 = parseSingleLogFile(path);
+			hmArray.addAll(hm2);
 return hmArray;
 	}
+//This method analyse the single file that as content of all the log files in that particular folder.
 public List<Object> parseSingleLogFile(String src)  throws IOException
  {
 //To read a file line by line
@@ -261,6 +256,7 @@ st=0;
 }
 if(((index7 != -1) && ((index3 != -1)&&(index6 != -1)) || ((index4 !=-1) && ((index5 != -1) && ((index10 !=-1) && (index8 != -1)) )) ||((index14 !=-1)&&(index5 !=-1) && (index10 !=-1))) || (((index5 !=-1) &&(index10 != -1) && (index8 != -1)) && (index4 !=-1)))
 {
+//The key is taken as both the line and stackTrace.
 stackTrace=extractedText+stackTrace;
 if(hm.containsKey(stackTrace))
 {
@@ -337,6 +333,7 @@ System.out.println("summary ==================");
 //System.out.println(l);
 return l;
 }
+//This method returns a hashMap that holds all the exception as key and its index value as value .
 public HashMap<Object,Object> properHash(File mainFolder,String path)throws IOException
 {
 List<Object> l5=parseLogFiles(mainFolder,path);
@@ -364,6 +361,7 @@ hm5.put(a1,a2);
 }*/
 return hm5;
 }
+//This method returns a list that has correct count of each exception and its file path.
 public List<Object> properList(File mainFolder,String path)throws IOException
 {
 List<Object> l7=parseLogFiles(mainFolder,path);
@@ -395,59 +393,7 @@ hm7.put(a1,1);
 }
 }
 }
-//System.out.println(hm7);
-/*System.out.println("summary ==================");
-                        for (Object entry : hm7.keySet()) {
-                                System.out.println("Key = " + entry + ", Value = "
-                                               + hm7.get(entry));
-}*/
-/*HashMap<Object,Object> hm9=new HashMap<Object,Object>();
-String stackTrace1="";
-for(int j=0;j<h2;j+=3)
-{
-Object b1=l7.get(j);
-String b2=(String)l7.get(j+2);
-//String stackTrace1="";
-//Integer c1=(Integer)hm7.get(b1);
-int u=1;
-if(l7.contains(b1))
-{
-if(hm9.containsKey(b1))
-{
-//Integer c1=(Integer)hm7.get(b1);
-//c1=c1-1;
-//if(c1>u)
 
-//Integer c1=(Integer)hm7.get(b1);
-//System.out.println(stackTrace1);
-//hm9.put(b1,stackTrace1);
-Object o2=hm9.get(b1);
-String b9=(String)o2;
-
-b9=b9+"\n"+ b2 +"\n";
-hm9.put(b1,b9);
-//c1--;
-//u++;
-}
-
-
-else
-{
-//Object o2=hm9.get(b1);
-//String b2=(String)o2;
-stackTrace1=b2;
-hm9.put(b1,b2);
-}
-}
-
-}*/
-
-
-/*System.out.println("summary ==================");
-                        for (Object entry : hm9.keySet()) {
-                                System.out.println("Key = " + entry + ", Value = "
-                                               + hm9.get(entry));
-}*/
 HashMap<Object,Object> hm11=new HashMap<Object,Object>();
 for(int u=0;u<h2;u+=3)
 {
@@ -471,11 +417,6 @@ hm11.put(u1,u5);
 }
 }
 
-/*System.out.println("summary ==================");
-                        for (Object entry : hm11.keySet()) {
-                                System.out.println("Key = " + entry + ", Value = "
-                                               + hm11.get(entry));
-}*/
 
 for(int y=0;y<h2;y+=3)
 {
