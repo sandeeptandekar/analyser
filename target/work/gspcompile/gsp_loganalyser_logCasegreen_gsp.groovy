@@ -48,37 +48,52 @@ printHtmlPart(10)
 }
 }
 printHtmlPart(11)
-if(true && (flash.message)) {
+for( ana in (black) ) {
+if(true && (ana.key == 'ticket')) {
+printHtmlPart(9)
+expressionOut.print(ana.value)
 printHtmlPart(12)
-expressionOut.print(flash.message)
-printHtmlPart(13)
 }
+}
+printHtmlPart(13)
+if(true && (flash.message)) {
 printHtmlPart(14)
+expressionOut.print(flash.message)
+printHtmlPart(15)
+}
+printHtmlPart(16)
 for( ana in (black) ) {
 printHtmlPart(1)
 if(true && (ana.key =='1')) {
 printHtmlPart(1)
 }
 else {
-printHtmlPart(15)
-expressionOut.print(ana.value)
-printHtmlPart(16)
-expressionOut.print(ana.key)
 printHtmlPart(17)
+if(true && (ana.key =='ticket')) {
+printHtmlPart(1)
 }
+else {
 printHtmlPart(18)
-}
+expressionOut.print(ana.value)
 printHtmlPart(19)
-})
-invokeTag('captureBody','sitemesh',42,[:],1)
+expressionOut.print(ana.key)
 printHtmlPart(20)
+}
+printHtmlPart(1)
+}
+printHtmlPart(21)
+}
+printHtmlPart(22)
+})
+invokeTag('captureBody','sitemesh',47,[:],1)
+printHtmlPart(23)
 }
 public static final Map JSP_TAGS = new HashMap()
 protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1422515063000L
+public static final long LAST_MODIFIED = 1422877013000L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'

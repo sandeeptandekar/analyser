@@ -13,6 +13,8 @@
                         <ul>
                                 <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
                        <li><g:each in="${hm}" var="ana"><g:if test="${ana.key == '1'}"><a href="${ana.value}"> Back</a></g:if></g:each></li>
+  <li><g:each in="${hm}" var="ana"><g:if test="${ana.key == 'ticket'}"><a href="${ana.value}"> Ticket Url</a></g:if></g:each></li>
+
                         </ul>
                 </div>
 <div id="show-logCase" class="content scaffold-show" role="main">
