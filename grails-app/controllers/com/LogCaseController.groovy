@@ -164,6 +164,8 @@ catch (FileUploadException e) {
        return render(text: [success:false] as JSON, contentType:'text/html')
 }
 }
+//This action collect the uploaded file path from the form and use it in java function to analyse it.
+ 
 def analyse()
 {
     def productId=params.product.id
@@ -176,7 +178,7 @@ def analyse()
     HashMap<String,HashMap<Integer,String>> hm4=new HashMap<String,HashMap<Integer,String>>();
     HashMap<Integer,String> hm1=new HashMap<Integer,String>();
     HashMap<Integer,String> hm22=new HashMap<Integer,String>();
-     HashMap<Integer,String> hm33=new HashMap<Integer,String>();
+    HashMap<Integer,String> hm33=new HashMap<Integer,String>();
 
 
 
@@ -189,8 +191,7 @@ def analyse()
    hm.put(red,0)
    hm.put("BLACK",0)
    def product=Product.findById(productId)
-//def product1=product.id
-//println product
+ //Insert the values in LogCase table.
    def log=new LogCase(ticketUrl:ticket,uploadedFilePath:uploadedPath,product:product)
      if (!log.save(flush:true)) {
            log.errors.each {
@@ -201,7 +202,9 @@ def analyse()
    def tick=logId.ticketUrl
    println tick
    def id=logId.id
+   //Here object for the java file is created.
    Code l=new Code();
+   //A method that returns the list of files in uploaded zip file
    def hm2=l.getAllLogFiles(mainFolder,uploadedPath);
     System.out.println("summary ==================");
                         for (String entry : hm2.keySet()) {
@@ -214,6 +217,7 @@ def analyse()
 
            File fdName=new File(fd);
            String folder=fdName.getName();
+           //here the folder name,casee id is stored in Expcontainer table.
            def expContainer=new ExpContainer(title:folder,logCase:logId)
            if (!expContainer.save(flush:true)) {
     expContainer.errors.each {
@@ -221,6 +225,7 @@ def analyse()
     }
    }
           System.out.println(path);
+               //This method returns the list that has key,frequency and file path.
                 def list= l.properList(mainFolder,path);
                 for(int i=0;i<list.size();i+=3)
      {
@@ -230,10 +235,11 @@ def analyse()
           String description="description";
           String resolution="resolution";
           String category="BLACK";
-//String expRef="";
+           //String expRef="";
           println key1
           println product
           def key2=key1.trim();
+         //For each time it comes into this loop it stores the key,product,caseId,category,description,resolution if it is occuring for the first time.If it is already present in the table it is rejected. 
           def expRef1=ExceptionRef.findByKeyAndProduct(key2,product)
           println "----" + expRef1
           if(expRef1 == null)
@@ -248,17 +254,17 @@ def analyse()
      }
 
          println  "-----------" + expRef1;
+         //If the particular key is stored in ExcptionRef table then its frequency,filepath,expContainer Id and expRefId are stored in this table.
          def logException=new LogException(frequency:frequency,logFilePath:logFilePath,expContainer:expContainer,expRef:expRef1)
-////logException.save()
          if (!logException.save(flush:true)) {
             logException.errors.each {
         println it
     }
     }
-
-//hm.put(expRef1,0);
    }
 }
+//The below code takes the particular caseId and finds the folders in that particular zip file and gives a hashMap that has a summary of how many exceptions are in category black,red,green.
+
           def hm3=l.getAllLogFiles(mainFolder,uploadedPath);
           for(String entry: hm3.keySet())
           {
@@ -267,7 +273,7 @@ def analyse()
             String df2=df1.getName() 
             def container=ExpContainer.findByTitle(df2)
             def container1=container.logCase
-//def container2=logCase.findById(container1)
+
             def logExp=LogException.findAllByExpContainer(container)
             println logExp
             int count1=0;
@@ -278,7 +284,6 @@ def analyse()
             String color4="BLACK"
             def black=logExp.expRefId
             def containerId=container.id
-//arrayList.add(containerId)
             hm1.put("key",id)
             hm4.put(color,hm1)
             out.put("0",hm4)
@@ -290,19 +295,16 @@ def analyse()
             out.put("1",hm4)
             hm4=new HashMap<String,HashMap<Integer,String>>();
             hm1=new HashMap<Integer,String>();
-//arrayList=new ArrayList<Object>();
+
 
             println(black)
             println(container)
-//println(containerId)
+
                     for(int j=0;j<black.size();j++)
                         {
                             String value=black.get(j);
                             def ref=ExceptionRef.findById(value)
                             def color1=ref.category
-
-//if(color1 == color )
-//{
                             if(hm.containsKey(color1))
                               {
                                    count1=hm.get(color1)
@@ -314,14 +316,13 @@ def analyse()
                                     hm.put(color1,1)
                               }
                           }
-//}
+
                               if(!hm4.containsKey(color))
                                {
                                     count3=hm.get(color)
 
                                     arrayList.add(count3)
-//println "-----------" + containerId
-//def link=g.createLink(controller : "logCase",action : "black", params : [ containerId : containerId, category : color])
+
                                     def link=g.createLink(controller : "logCase",action : "black" , params : [id : containerId,case1 : id])
                                     hm1.put(count3,link)
                                     arrayList.add(link)
@@ -373,11 +374,10 @@ System.out.println("summary ==================");
                                 System.out.println("Key = " + entry + ", Value = "
                                                + hm.get(entry));}
 
-//////def a11 = LogCase.findByUploadedFilePath(uploadedPath)
+
 Map<String, Float> map = new TreeMap<String, Float>(out);
 return new ModelAndView("/logCase/display",[ result : map])
-//return new ModelAndView("/logCase/display4",[flName : hm])
-//////System.out.println(j);
+
 }
 
 
@@ -403,6 +403,7 @@ def link=g.createLink(controller : "logCase",action : "show", params : [ logCase
 }
 def page()
 {
+    //This action gets the case id from the home page in view case link and gives the summary of exceptions in each category according to folders in theuploaded zip file.
     def a=params.id
     def a1=params.caseno
     def a3=a1
@@ -410,10 +411,6 @@ def page()
     def ticket=logCaseInstance.ticketUrl
     def logCaseInstance1= logCaseInstance.product
     def logCaseInstance2= logCaseInstance.uploadedFilePath
-
-//HashMap<String,Integer> hm=new HashMap<String,Integer>();
-//HashMap<Object,HashMap<String,ArrayList>> out=new HashMap<String,HashMap<String,ArrayList>>();
-//HashMap<String,ArrayList> hm4=new HashMap<String,ArrayList>();
     HashMap<String,HashMap<String,HashMap<Integer,String>>> out=new HashMap<String,HashMap<String,HashMap<Integer,String>>>();
     HashMap<String,Integer> hm=new HashMap<String,Integer>();
     HashMap<String,HashMap<Integer,String>> hm4=new HashMap<String,HashMap<Integer,String>>();
@@ -435,9 +432,6 @@ def page()
     hm.put("BLACK",0)
     def path=ExpContainer.findAllByLogCase(logCaseInstance)
     println "-------------" + path
-//arrayList.add(logCaseInstance1)
-//arrayList.add(a1)
-//hm4.put(logCaseInstance1,arrayList)
 
     hm1.put("key",a1)
     hm4.put(color,hm1)
@@ -460,9 +454,7 @@ def page()
          for(int j=0;j<b1.size();j++)
               {
                  def value=b1.get(j)
-//def b3=LogException.findById(value)
                  def b4=value.expRef
-//def b5=ExceptionRef.findById(b4)
                  def b6=b4.category
                  println "............" + b6
                  if(hm.containsKey(b6))
@@ -483,8 +475,6 @@ def page()
                          count3=hm.get(color)
 
                          arrayList.add(count3)
-
-//def link=g.createLink(controller : "logCase",action : "black", params : [ containerId : containerId, category : color])
                          def link=g.createLink(controller : "logCase",action : "black" , params : [id : c2, case1 : a1])
                          hm1.put(count3,link)
                          arrayList.add(link)
@@ -530,7 +520,7 @@ def page()
 println out
                          Map<String, Float> map = new TreeMap<String, Float>(out);
                          [result:map]
-//return new ModelAndView("/logCase/get",[logCase :a])
+
 }
 def page1(LogCase logCaseInstance)
 {
@@ -540,10 +530,6 @@ def page1(LogCase logCaseInstance)
      def ticket=logCaseInstance.ticketUrl
      def logCaseInstance1= logCaseInstance.product
      def logCaseInstance2= logCaseInstance.uploadedFilePath
-
-//HashMap<String,Integer> hm=new HashMap<String,Integer>();
-//HashMap<Object,HashMap<String,ArrayList>> out=new HashMap<String,HashMap<String,ArrayList>>();
-//HashMap<String,ArrayList> hm4=new HashMap<String,ArrayList>();
      HashMap<String,HashMap<String,HashMap<Integer,String>>> out=new HashMap<String,HashMap<String,HashMap<Integer,String>>>();
      HashMap<String,Integer> hm=new HashMap<String,Integer>();
      HashMap<String,HashMap<Integer,String>> hm4=new HashMap<String,HashMap<Integer,String>>();
@@ -566,9 +552,6 @@ def page1(LogCase logCaseInstance)
 
      def path=ExpContainer.findAllByLogCase(logCaseInstance)
      println "-------------" + path
-//arrayList.add(logCaseInstance1)
-//arrayList.add(a1)
-//hm4.put(logCaseInstance1,arrayList)
 
      hm1.put("key",logCaseInstance3)
      hm4.put(color,hm1)
@@ -591,9 +574,7 @@ def page1(LogCase logCaseInstance)
                   for(int j=0;j<b1.size();j++)
                      {
                           def value=b1.get(j)
-//def b3=LogException.findById(value)
                           def b4=value.expRef
-//def b5=ExceptionRef.findById(b4)
                           def b6=b4.category
                           println "............" + b6
                           if(hm.containsKey(b6))
@@ -663,6 +644,7 @@ Map<String, Float> map = new TreeMap<String, Float>(out);
 [result:map]
 //return new ModelAndView("/logCase/get",[logCase :a])
 }
+//This action is called after you edit the content for particular Key by clicking the back button.It takes CaseId from the HashMap of Update2.gsp page.
 def summary(Integer id)
 {
        def a=params.id
@@ -673,10 +655,6 @@ def summary(Integer id)
        def log=logCaseInstance.id
        def logCaseInstance1= logCaseInstance.product
        def logCaseInstance2= logCaseInstance.uploadedFilePath
-
-//HashMap<String,Integer> hm=new HashMap<String,Integer>();
-//HashMap<Object,HashMap<String,ArrayList>> out=new HashMap<String,HashMap<String,ArrayList>>();
-//HashMap<String,ArrayList> hm4=new HashMap<String,ArrayList>();
        HashMap<String,HashMap<String,HashMap<Integer,String>>> out=new HashMap<String,HashMap<String,HashMap<Integer,String>>>();
        HashMap<String,Integer> hm=new HashMap<String,Integer>();
        HashMap<String,HashMap<Integer,String>> hm4=new HashMap<String,HashMap<Integer,String>>();
@@ -723,9 +701,8 @@ def summary(Integer id)
                    for(int j=0;j<b1.size();j++)
                       {
                          def value=b1.get(j)
-//def b3=LogException.findById(value)
                          def b4=value.expRef
-//def b5=ExceptionRef.findById(b4)
+
                          def b6=b4.category
                          println "............" + b6
                          if(hm.containsKey(b6))
@@ -747,7 +724,7 @@ def summary(Integer id)
 
                               arrayList.add(count3)
 
-//def link=g.createLink(controller : "logCase",action : "black", params : [ containerId : containerId, category : color])
+
                               def link=g.createLink(controller : "logCase",action : "black" , params : [id : c2, case1 : id])
                               hm1.put(count3,link)
                               arrayList.add(link)
@@ -793,8 +770,9 @@ println arrayList
 println out
 Map<String, Float> map = new TreeMap<String, Float>(out);
 [result:map]
-//return new ModelAndView("/logCase/get",[logCase :a])
+
 }
+//this action is for displaying the exceptions with category black for particular case id and folder.
 def black(Integer id,Integer case1)
 {
      String category="BLACK"
@@ -835,7 +813,7 @@ Map<String, Float> map = new TreeMap<String, Float>(hm);
 [black:map]
 
 }
-
+//this action is for displaying the exceptions with category green for particular case id and folder.
 def green(Integer id,Integer case1)
 {
      String category="green"
@@ -872,6 +850,7 @@ Map<String, Float> map = new TreeMap<String, Float>(hm);
 
 [black:hm]
 }
+//this action is for displaying the exceptions with category red for particular case id and folder.
 def red(int id,Integer case1)
 {
      String category="red"
@@ -917,6 +896,7 @@ def logCaseInstance=LogCase.findById(a)
 println logCaseInstance
 respond logCaseInstance
 }
+//This page gives the detailed description of particular key in black category and gives you the link to edit some parameter of that key.
 def edit1(int id,int container,int caseId)
 {
      HashMap<Object,Object> hm=new HashMap<String,Object>()
@@ -947,7 +927,6 @@ println a1
      def currentFolder=ExpContainer.findById(container)
      def currentFolder1=currentFolder.title
      def link=g.createLink(controller : "logCase",action : "update1", params : [ id : id1,caseId : caseId])
-//hm.put("ledit",link)
      def link1=g.createLink(controller : "logCase",action : "black", params : [ id : container,case1 : caseId ])
      hm.put("1",link1)
      hm.put("ticket",ticket)
@@ -961,11 +940,10 @@ println a1
      hm.put("product",link)
      hm.put("pproduct",a4)
      println hm
-//def link=g.createLink(controller : "ExceptionRef",action : "edit", params : [ id : id1])
-//hm.put("ledit",link)
      [hm:hm]
 
 }
+//This page allows you to change the category ,resolution and description.
 def update1(int id,int caseId)
 {
     def ref=ExceptionRef.findById(id)
@@ -990,25 +968,20 @@ def update1(int id,int caseId)
     Map<String, Float> map = new TreeMap<String, Float>(hm);
     [black:hm]
 }
+//this page displays the updated details of the changed key.
 def update2()
 {
-//def key=params.key
     def category=params.category
     def description=params.description
     def resolution=params.resolution
-//def product=params.product.id
     def caseId=params.caseId
     def id=params.ref
     println "+++++++++++" + caseId
     println "__________" + id
-//println "+++++" +key
 
     def ref1=ExceptionRef.findById(id)
     def product2=ref1.product
-//def pro=Product.findById(product)
-//def pro1=pro.name
-//def pro2=pro.version
-//def pro3=pro1 +"-"+pro2
+
      def key=ref1.key
      ref1.category=category;
      ref1.description=description;
@@ -1032,6 +1005,8 @@ def update2()
      [black:hm]
 
 }
+//This page gives the detailed description of particular key in green category and gives you the link to edit some parameter of that key.
+
 def edit4(int id,int container,int caseId)
 {
      HashMap<Object,Object> hm=new HashMap<String,Object>()
@@ -1063,7 +1038,6 @@ def edit4(int id,int container,int caseId)
      def a3=a.resolution
      def a4=a.product
      def link=g.createLink(controller : "logCase",action : "update1", params : [ id : id1,caseId : caseId])
-//hm.put("ledit",link)
      def link1=g.createLink(controller : "logCase",action : "green", params : [ id : container,case1 : caseId ])
      hm.put("ticket",ticket)
      hm.put("1",link1)
@@ -1077,11 +1051,10 @@ def edit4(int id,int container,int caseId)
      hm.put("product",link)
      hm.put("pproduct",a4)
      println hm
-//def link=g.createLink(controller : "ExceptionRef",action : "edit", params : [ id : id1])
-//hm.put("ledit",link)
      [hm:hm]
 
 }
+//This page gives the detailed description of particular key in red category and gives you the link to edit some parameter of that key.
 def edit3(int id,int container,int caseId)
 {
      HashMap<Object,Object> hm=new HashMap<String,Object>()
