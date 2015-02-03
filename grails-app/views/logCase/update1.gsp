@@ -62,7 +62,7 @@
      <tr>
 <td>Description</td>
 
-        <td>                                        <g:textField  id="description" name="description" required="" value="${ana.value}"/></td>
+        <td>                                        <g:textArea  id="description" name="description" required="" value="${ana.value}"/></td>
 
 
                                 </tr>
