@@ -390,6 +390,54 @@ def display3(Integer exp)
 def value1=ExceptionRef.findById(exp)
 [value:value1]
 }
+def category1()
+{
+def black="BLACK"
+def a=ExceptionRef.findAllByCategory(black)
+HashMap<String,Object> hm=new HashMap<String,Object>();
+for(int i=0;i<a.size();i++)
+{
+def value=a.get(i)
+def key=value.key
+def id1=value.id
+ def link=g.createLink(controller : "logCase",action : "edit6", params : [ category : black,keyId : id1])
+
+hm.put(key,link)
+}
+[black:hm]
+}
+def category2()
+{
+def red="red"
+def a=ExceptionRef.findAllByCategory(red)
+HashMap<String,Object> hm=new HashMap<String,Object>();
+for(int i=0;i<a.size();i++)
+{
+def value=a.get(i)
+def key=value.key
+def id1=value.id
+def link=g.createLink(controller : "logCase",action : "edit7", params : [ category : red,keyId : id1])
+
+hm.put(key,link)
+}
+[black:hm]
+}
+def category3()
+{
+def green="green"
+def a=ExceptionRef.findAllByCategory(green)
+HashMap<String,Object> hm=new HashMap<String,Object>();
+for(int i=0;i<a.size();i++)
+{
+def value=a.get(i)
+def key=value.key
+def id1=value.id
+def link=g.createLink(controller : "logCase",action : "edit8", params : [ category : green,keyId : id1])
+
+hm.put(key,link)
+}
+[black:hm]
+}
 
 
 def specific()
@@ -1103,6 +1151,204 @@ def edit3(int id,int container,int caseId)
 //def link=g.createLink(controller : "ExceptionRef",action : "edit", params : [ id : id1])
 //hm.put("ledit",link)
      [hm:hm]
+
+}
+def edit6(int keyId)
+{
+    def ref=ExceptionRef.findById(keyId)
+    def key=ref.key
+    def product=ref.product
+    def description=ref.description
+    def category=ref.category
+    def resolution=ref.resolution
+    //def case2=LogCase.findById(caseId)
+    //def ticket=case2.ticketUrl
+ def link1=g.createLink(controller : "logCase",action : "category1", params : [ black : "BLACK" ])
+
+    HashMap<String,Object> hm=new HashMap<String,Object>();
+    //hm.put("ticket",ticket)
+    hm.put("1",key)
+    hm.put("2",product)
+    hm.put("3",category)
+    hm.put("4",description)
+    hm.put("5",resolution)
+    hm.put("6",keyId)
+    hm.put("back",link1)
+    //hm.put("7",id)
+    println hm
+    Map<String, Float> map = new TreeMap<String, Float>(hm);
+    [black:hm]
+}
+def edit7(int keyId)
+{
+    def ref=ExceptionRef.findById(keyId)
+    def key=ref.key
+    def product=ref.product
+    def description=ref.description
+    def category=ref.category
+    def resolution=ref.resolution
+    //def case2=LogCase.findById(caseId)
+    //def ticket=case2.ticketUrl
+ def link1=g.createLink(controller : "logCase",action : "category2", params : [ black : "red" ])
+
+    HashMap<String,Object> hm=new HashMap<String,Object>();
+    //hm.put("ticket",ticket)
+    hm.put("1",key)
+    hm.put("2",product)
+    hm.put("3",category)
+    hm.put("4",description)
+    hm.put("5",resolution)
+    hm.put("6",keyId)
+    hm.put("back",link1)
+    //hm.put("7",id)
+    println hm
+    Map<String, Float> map = new TreeMap<String, Float>(hm);
+    [black:hm]
+}
+def edit8(int keyId)
+{
+    def ref=ExceptionRef.findById(keyId)
+    def key=ref.key
+    def product=ref.product
+    def description=ref.description
+    def category=ref.category
+    def resolution=ref.resolution
+    //def case2=LogCase.findById(caseId)
+    //def ticket=case2.ticketUrl
+ def link1=g.createLink(controller : "logCase",action : "category3", params : [ green : "green" ])
+
+    HashMap<String,Object> hm=new HashMap<String,Object>();
+    //hm.put("ticket",ticket)
+    hm.put("1",key)
+    hm.put("2",product)
+    hm.put("3",category)
+    hm.put("4",description)
+    hm.put("5",resolution)
+    hm.put("6",keyId)
+    hm.put("back",link1)
+    //hm.put("7",id)
+    println hm
+    Map<String, Float> map = new TreeMap<String, Float>(hm);
+    [black:hm]
+}
+
+def show2()
+{
+    def category=params.category
+    def description=params.description
+    def resolution=params.resolution
+   def keyId=params.caseId
+    //def id=params.ref
+    println "+++++++++++" + keyId
+   // println "__________" + id
+
+    def ref1=ExceptionRef.findById(keyId)
+    def product2=ref1.product
+
+     def key=ref1.key
+     ref1.category=category;
+     ref1.description=description;
+     ref1.product=product2;
+     ref1.resolution=resolution;
+     ref1.save()
+     def ref2=ExceptionRef.findById(keyId)
+     def category1=ref2.category
+     def description1=ref2.description
+     def resolution1=ref2.resolution
+     //def link=g.createLink(controller : "logCase",action : "summary", params : [ id : caseId])
+     HashMap<String,Object> hm =new HashMap<String,Object>();
+     def link1=g.createLink(controller : "logCase",action : "category1", params : [ black : "BLACK" ])
+
+    // hm.put("0",link)
+     hm.put("1",key)
+     hm.put("2",category1)
+     hm.put("3",description1)
+     hm.put("4",resolution1)
+     hm.put("5",product2)
+     hm.put("back",link1)
+     println "======" + category1
+     Map<String, Float> map = new TreeMap<String, Float>(hm);
+     [black:hm]
+
+}
+def show4()
+{
+    def category=params.category
+    def description=params.description
+    def resolution=params.resolution
+   def keyId=params.caseId
+    //def id=params.ref
+    println "+++++++++++" + keyId
+   // println "__________" + id
+
+    def ref1=ExceptionRef.findById(keyId)
+    def product2=ref1.product
+
+     def key=ref1.key
+     ref1.category=category;
+     ref1.description=description;
+     ref1.product=product2;
+     ref1.resolution=resolution;
+     ref1.save()
+     def ref2=ExceptionRef.findById(keyId)
+     def category1=ref2.category
+     def description1=ref2.description
+     def resolution1=ref2.resolution
+     //def link=g.createLink(controller : "logCase",action : "summary", params : [ id : caseId])
+     HashMap<String,Object> hm =new HashMap<String,Object>();
+     def link1=g.createLink(controller : "logCase",action : "category3", params : [ green : "green" ])
+
+    // hm.put("0",link)
+     hm.put("1",key)
+     hm.put("2",category1)
+     hm.put("3",description1)
+     hm.put("4",resolution1)
+     hm.put("5",product2)
+     hm.put("back",link1)
+     println "======" + category1
+     Map<String, Float> map = new TreeMap<String, Float>(hm);
+     [black:hm]
+
+}
+
+
+def show3()
+{
+    def category=params.category
+    def description=params.description
+    def resolution=params.resolution
+   def keyId=params.caseId
+    //def id=params.ref
+    println "+++++++++++" + keyId
+   // println "__________" + id
+
+    def ref1=ExceptionRef.findById(keyId)
+    def product2=ref1.product
+
+     def key=ref1.key
+     ref1.category=category;
+     ref1.description=description;
+     ref1.product=product2;
+     ref1.resolution=resolution;
+     ref1.save()
+     def ref2=ExceptionRef.findById(keyId)
+     def category1=ref2.category
+     def description1=ref2.description
+     def resolution1=ref2.resolution
+     //def link=g.createLink(controller : "logCase",action : "summary", params : [ id : caseId])
+     HashMap<String,Object> hm =new HashMap<String,Object>();
+     def link1=g.createLink(controller : "logCase",action : "category2", params : [ red : "red" ])
+
+    // hm.put("0",link)
+     hm.put("1",key)
+     hm.put("2",category1)
+     hm.put("3",description1)
+     hm.put("4",resolution1)
+     hm.put("5",product2)
+     hm.put("back",link1)
+     println "======" + category1
+     Map<String, Float> map = new TreeMap<String, Float>(hm);
+     [black:hm]
 
 }
 

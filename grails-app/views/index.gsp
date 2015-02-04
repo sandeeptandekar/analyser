@@ -100,6 +100,9 @@
                                         </li>
                                         <li><a href="logCase/index?sort=id&max=10&order=desc"> List of Cases</a>
                                          </li>
+                                         <li><a href="logCase/category1">Exception With Category Black</a></li>
+                                         <li><a href="logCase/category2">Exception With Category red</a></li>
+                                         <li><a href="logCase/category3">Exception With Category green</a></li>
                          </ul>
 </g:form>
 			</div>
