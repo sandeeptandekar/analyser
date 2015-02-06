@@ -33,4 +33,5 @@
 	<g:textField name="uploadedFilePath" required="" value="${logCaseInstance?.uploadedFilePath}"/>
 
 </div>
+ <g:hiddenField name="path" required="" value="${logCaseInstance?.uploadedFilePath}"/>
 

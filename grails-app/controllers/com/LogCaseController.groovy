@@ -147,17 +147,17 @@ try
        File f1=new File(f,params.qqfile)
       
         def p=params.qqfile
-       println p
+     //  println p
        f1.createNewFile();
        String path1=f1.getAbsolutePath();
-       println path1
+       //println path1
        InputStream inputStream = selectInputStream(request)
       
        ajaxUploaderService.upload(inputStream,f1)
       
        String path=f.getAbsolutePath();
        
-       return render(text: [success:true, filePath:path] as JSON, contentType:'text/html')
+       return render(text: [success:true, filePath:path,zip:path1] as JSON, contentType:'text/html')
 }
 catch (FileUploadException e) {
        log.error("Failed to upload file.", e)
@@ -169,9 +169,9 @@ catch (FileUploadException e) {
 def analyse()
 {
     def productId=params.product.id
-    def filePath=params.Filepath
+    String filePath=params.path
     def ticket=params.ticketUrl
-    def uploadedPath=params.uploadedFilePath
+    String uploadedPath=params.uploadedFilePath
     File mainFolder = new File(uploadedPath)
     HashMap<String,HashMap<String,HashMap<Integer,String>>> out=new HashMap<String,HashMap<String,HashMap<Integer,String>>>();
     HashMap<String,Integer> hm=new HashMap<String,Integer>();
@@ -180,7 +180,8 @@ def analyse()
     HashMap<Integer,String> hm22=new HashMap<Integer,String>();
     HashMap<Integer,String> hm33=new HashMap<Integer,String>();
 
-
+System.out.println(filePath);
+println(uploadedPath);
 
     ArrayList<Object> arrayList=new ArrayList<Object>();
     ArrayList<Object> arrayList2=new ArrayList<Object>();
@@ -205,7 +206,7 @@ def analyse()
    //Here object for the java file is created.
    Code l=new Code();
    //A method that returns the list of files in uploaded zip file
-   def hm2=l.getAllLogFiles(mainFolder,uploadedPath);
+   def hm2=l.getAllLogFiles(mainFolder,uploadedPath,filePath);
     System.out.println("summary ==================");
                         for (String entry : hm2.keySet()) {
                                 System.out.println("Key = " + entry + ", Value = "
@@ -265,7 +266,7 @@ def analyse()
 }
 //The below code takes the particular caseId and finds the folders in that particular zip file and gives a hashMap that has a summary of how many exceptions are in category black,red,green.
 
-          def hm3=l.getAllLogFiles(mainFolder,uploadedPath);
+          def hm3=l.getAllLogFiles(mainFolder,uploadedPath,filePath);
           for(String entry: hm3.keySet())
           {
             String df=entry;

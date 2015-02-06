@@ -40,6 +40,7 @@
 console.log(responseJSON);
 if(responseJSON.success) {
 $('#uploadedFilePath').val(responseJSON.filePath);
+$('#path').val(responseJSON.zip);
 }
                                            </uploader:onComplete>
                                            </uploader:uploader>
