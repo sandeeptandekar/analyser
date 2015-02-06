@@ -32,10 +32,10 @@ printHtmlPart(6)
 invokeTag('actionSubmit','g',98,['value':("show"),'action':("page"),'name':("view"),'id':("view1")],-1)
 printHtmlPart(7)
 })
-invokeTag('form','g',104,['name':("myform"),'method':("post"),'controller':("logCase")],2)
+invokeTag('form','g',107,['name':("myform"),'method':("post"),'controller':("logCase")],2)
 printHtmlPart(8)
 })
-invokeTag('captureBody','sitemesh',106,[:],1)
+invokeTag('captureBody','sitemesh',109,[:],1)
 printHtmlPart(9)
 }
 public static final Map JSP_TAGS = new HashMap()
@@ -43,7 +43,7 @@ protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1422530026000L
+public static final long LAST_MODIFIED = 1423051875000L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'
