@@ -29,6 +29,9 @@ public class Code {
         static String atScript="at script";
         static String atSun="at sun";
         static String atJavax="at javax";
+        static String traceBack="Traceback";
+        static String filePy="File";
+        static String engine="Engine";
 //This method is to list all files with .log extension
 	public void getUnZipFiles(String path,String path2) throws IOException,
 			NullPointerException {
@@ -293,6 +296,9 @@ lineNumber++;
             int index12=line.indexOf(atSun);
             int index13=line.indexOf(atScript);
             int index14=line.indexOf(atJavax);
+            int index15=line.indexOf(traceBack);
+            int index16=line.indexOf(filePy);
+            int index17=line.indexOf(engine);
 //check++;
 if((index1 !=-1) || (index2 !=-1))
 {
@@ -390,6 +396,102 @@ l.add(occurence);
 start=false;
 st=0;
 }
+if(index15 !=-1)
+{
+start=true;
+//System.out.println(upperCase + " found in line " + lineNumber );
+//The line which has the keyword "Exception" or "exception" is assigned to a variable
+extractedText = line;
+exceptionLine=lineNumber;
+ exceptionLineNo=Integer.toString(lineNumber);
+//THe whole line is printed
+if(hm1.containsKey(extractedText))
+{
+count=(Integer)hm1.get(extractedText);
+count++;
+hm1.put(extractedText,count);
+}
+else
+{
+//line is added to the hashmap
+hm1.put(extractedText,1);
+}
+
+occurence=exceptionLineNo+"------"+src;
+//System.out.println(extractedText);
+check=0;
+equate=check;
+//System.out.println(st);
+st=0;
+//System.out.println(st);
+}
+equate++;
+st++;
+if((start ==true))
+{
+//System.out.println(st);
+stackLine=lineNumber;
+//if((stackLine-lineNumber) <3)
+//{
+if((index16 != -1))
+{
+stackTrace=stackTrace+"\n" + line+"\n";
+st=0;
+}
+if((index16 != -1) && (index17 != -1))
+{
+stackTrace=extractedText+stackTrace;
+if(hm.containsKey(stackTrace))
+{
+count=(Integer)hm.get(stackTrace);
+//The count value of the line is incremented
+count++;
+hm.put(stackTrace,count);
+//check=0;
+}
+else
+{
+//line is added to the hashmap
+hm.put(stackTrace,1);
+}
+
+System.out.println(stackTrace);
+count=(Integer)hm.get(stackTrace);
+//System.out.println(count);
+occurence=exceptionLineNo +"--------" + src;
+//System.out.println(occurence);
+Integer g =0;
+Integer g6=0;
+start = false;
+if(hm.containsKey(stackTrace))
+{
+g=hm.get(stackTrace);
+l.add(stackTrace);
+l.add(g);
+//l.add(stackTrace);
+l.add(occurence);
+exceptionLine=0;
+stackLine=0;
+stackTrace="";
+//count=0;
+check=0;
+equate=check;
+//st=0;
+}
+}
+}
+
+if((st==limit) && (start == true))
+{
+//System.out.println(st);
+Integer g=hm1.get(extractedText);
+occurence=exceptionLineNo +"--------" + src;
+l.add(extractedText);
+l.add(g);
+l.add(occurence);
+start=false;
+st=0;
+}
 
 //}
 
@@ -411,7 +513,8 @@ System.out.println("summary ==================");
                                 System.out.println("Key = " + entry + ", Value = "
                                                + hm1.get(entry));}*/
 
-//System.out.println(l);
+
+System.out.println(l);
 return l;
 }
 public HashMap<Object,Object> properHash(File mainFolder,String path)throws IOException
@@ -586,8 +689,8 @@ return l6;
 public static void main(String[] args) throws IOException,
 			NullPointerException,FileNotFoundException {
 		Code l = new Code();
-		String path2= "/home/kavitha/testing7/2015_01_26_15_41_20.zip";
-                String path="/home/kavitha/testing7";
+		String path2= "/home/kavitha/testing5/folder4.zip";
+                String path="/home/kavitha/testing5";
                 File mainFolder=new File(path);
 		//l.analyseLog(mainFolder);
                HashMap<String,String> hm21=l.getAllLogFiles(mainFolder,path,path2);
@@ -596,12 +699,12 @@ System.out.println("summary ==================");
                         for (String entry : hm21.keySet()) {
                                 System.out.println("Key = " + entry + ", Value = "
                                                + hm21.get(entry));}
-                 /* for(String entry5:hm21.keySet())
+                  for(String entry5:hm21.keySet())
 {
-String path2=hm21.get(entry5);
+String path3=hm21.get(entry5);
 System.out.println(path2);
-                   l.properList(mainFolder,path2);
-}*/
+                   l.properList(mainFolder,path3);
+}
 //l.parseSingleLogFile(path1);
 //l.properList(mainFolder,path1);
 //l.correctList(path1);
