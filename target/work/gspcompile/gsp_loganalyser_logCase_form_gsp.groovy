@@ -31,13 +31,15 @@ invokeTag('message','g',30,['code':("logCase.uploadedFilePath.label"),'default':
 printHtmlPart(2)
 invokeTag('textField','g',33,['name':("uploadedFilePath"),'required':(""),'value':(logCaseInstance?.uploadedFilePath)],-1)
 printHtmlPart(6)
+invokeTag('hiddenField','g',36,['name':("path"),'required':(""),'value':(logCaseInstance?.uploadedFilePath)],-1)
+printHtmlPart(7)
 }
 public static final Map JSP_TAGS = new HashMap()
 protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1421905252000L
+public static final long LAST_MODIFIED = 1423150046000L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'
