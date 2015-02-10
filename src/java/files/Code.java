@@ -51,12 +51,6 @@ byte[] buffer = new byte[1024];
 
 try{
  
-    	//create output directory is not exists
-    //	File folder = new File(OUTPUT_FOLDER);
-    //	if(!folder.exists()){
-    //		folder.mkdir();
-    //	}
- 
     	//get the zip file content
     	ZipInputStream zis = 
     		new ZipInputStream(new FileInputStream(path));
@@ -99,51 +93,7 @@ try{
        ex.printStackTrace(); 
     }
 
-	//This loop unzip's the file
-	/*	for (String file : listOfZipFiles) {
-                       System.out.println(file);
-			// construct the absolute file paths..
-                        //File new1=new File(path,file);
-                        //File new2=new File(path,"new");
-			String absoluteFilePath = new StringBuffer(path).append(File.separator).append(file).toString();
-                        // String absoluteFilePath=new1.getAbsolutePath().toString();
-                        System.out.println("-------+++++" + absoluteFilePath);
-			//String destDir = "/home/kavitha/project/files";
-			java.util.jar.JarFile jar = new java.util.jar.JarFile(absoluteFilePath);
-			java.util.Enumeration enumEntries = jar.entries();
-                       // System.out.println(enumEntries);
-			while (enumEntries.hasMoreElements()) {
-				java.util.jar.JarEntry file1 = (java.util.jar.JarEntry) enumEntries
-						.nextElement();
-                               // String df=file1.getAbsoluteFilePath();
-                               // File new1=new File(df);
-                               // File ne=new File(new1,"new");
-                                 System.out.println("++++++" +file1);
-				java.io.File f = new java.io.File(path
-						+ java.io.File.separator + file1.getName());
-  //File f12=new File(path,"log");
-            //f12.mkdir();
-				if (file1.isDirectory()) { // if its a directory, create it
-					 if (f.exists()) {
-                //logger.log(Level.WARNING, "Directory {0} already exists!", entryFile);
-                  //f.mkdir();
-            } else {
-                f.mkdir();
-                continue;
-            }
-                                        
-				}
-                                System.out.println(f);
-				java.io.InputStream is = jar.getInputStream(file1); // get the input stream
-					System.out.println(is);															java.io.FileOutputStream fos = new java.io.FileOutputStream(f);
-                                          System.out.println(fos);
-				while (is.available() > 0) { // write contents of 'is' to 'fos'
-					fos.write(is.read());
-				}
-				fos.close();
-				is.close();
-			}
-		}*/
+
 }
 
 
@@ -206,34 +156,33 @@ System.out.println(file.getName()+"\t"+new Date(file.lastModified()));
 if(file.getName().endsWith(".log"))
 {
 			String absoluteFilePath5 = (file.getAbsolutePath()).toString();
-			//data.add(absoluteFilePath1);//".log" files are stored in ArrayList
+			
                          System.out.println(absoluteFilePath5);
- inputChannel = new FileInputStream(absoluteFilePath5).getChannel();
-                         //BufferedReader br = new BufferedReader(new FileReader(absoluteFilePath5));
+                         inputChannel = new FileInputStream(absoluteFilePath5).getChannel();
+                         
                          File root=new File(new1);
                          String d="new";
                          File f1=new File(root,d);
                          f1.createNewFile();
                          absoluteFilePath=(f1.getAbsolutePath()).toString();
-                         //FileWriter out=new FileWriter(absoluteFilePath);
-                           outputChannel = new FileOutputStream(absoluteFilePath,true).getChannel();
+                         
+                         outputChannel = new FileOutputStream(absoluteFilePath,true).getChannel();
                         
-                outputChannel.position( outputChannel.size() );
-inputChannel.transferTo(0, inputChannel.size(), outputChannel);
-inputChannel.close();
-outputChannel.close();
+                         outputChannel.position( outputChannel.size() );
+                         inputChannel.transferTo(0, inputChannel.size(), outputChannel);
+                         inputChannel.close();
+                         outputChannel.close();
 
-                hm15.put(new1,absoluteFilePath);
-                        //System.out.println(absoluteFilePath5);
+                         hm15.put(new1,absoluteFilePath);
+                        
 }		}
 else
 {
-//data.addAll(getAllLogFiles(file,path));
+
   
 }
 }
-//inputChannel.close();
-//outputChannel.close();
+
 }	
 		
 //System.out.println(data);
@@ -245,16 +194,16 @@ System.out.println("summary ==================");
 
 		return hm15;
 	}
-//This method returns a ArrayList of hashmap
+//This method returns a ArrayList of list
 	public List<Object> parseLogFiles(File mainFolder,String path)
 			throws IOException {
 //ArrayList<String> logFiles=path;//".log" files are stored in arraylist
 List<Object> hmArray=new ArrayList<Object>();
 	
-		//for (String filePath : logFiles) {
+		
 			List<Object> hm2 = parseSingleLogFile(path);
-			hmArray.addAll(hm2);//list of hashmaps are stored in Arraylist
-			 //}
+			hmArray.addAll(hm2);
+			 
 //System.out.println(hmArray);
 return hmArray;
 	}
@@ -576,52 +525,8 @@ hm7.put(a1,1);
 }
 }
 }
-//System.out.println(hm7);
-/*System.out.println("summary ==================");
-                        for (Object entry : hm7.keySet()) {
-                                System.out.println("Key = " + entry + ", Value = "
-                                               + hm7.get(entry));
-}*/
-/*HashMap<Object,Object> hm9=new HashMap<Object,Object>();
-String stackTrace1="";
-for(int j=0;j<h2;j+=3)
-{
-Object b1=l7.get(j);
-String b2=(String)l7.get(j+2);
-//String stackTrace1="";
-//Integer c1=(Integer)hm7.get(b1);
-int u=1;
-if(l7.contains(b1))
-{
-if(hm9.containsKey(b1))
-{
-//Integer c1=(Integer)hm7.get(b1);
-//c1=c1-1;
-//if(c1>u)
-
-//Integer c1=(Integer)hm7.get(b1);
-//System.out.println(stackTrace1);
-//hm9.put(b1,stackTrace1);
-Object o2=hm9.get(b1);
-String b9=(String)o2;
-
-b9=b9+"\n"+ b2 +"\n";
-hm9.put(b1,b9);
-//c1--;
-//u++;
-}
 
 
-else
-{
-//Object o2=hm9.get(b1);
-//String b2=(String)o2;
-stackTrace1=b2;
-hm9.put(b1,b2);
-}
-}
-
-}*/
 
 
 /*System.out.println("summary ==================");
