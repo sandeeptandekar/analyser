@@ -689,14 +689,13 @@ return l6;
  
 public static void main(String[] args) throws IOException,
 			NullPointerException,FileNotFoundException {
-		Code l = new Code();
-		String path2= "/home/kavitha/testing5/folder4.zip";
-                String path="/home/kavitha/testing5";
-                File mainFolder=new File(path);
+		//Code l = new Code();
+		
+                //File mainFolder=new File(path);
 		//l.analyseLog(mainFolder);
-               HashMap<String,String> hm21=l.getAllLogFiles(mainFolder,path,path2);
+               //HashMap<String,String> hm21=l.getAllLogFiles(mainFolder,path,path2);
                //l.parseLogFiles(mainFolder,path);
-System.out.println("summary ==================");
+/*System.out.println("summary ==================");
                         for (String entry : hm21.keySet()) {
                                 System.out.println("Key = " + entry + ", Value = "
                                                + hm21.get(entry));}
@@ -705,7 +704,7 @@ System.out.println("summary ==================");
 String path3=hm21.get(entry5);
 System.out.println(path2);
                    l.properList(mainFolder,path3);
-}
+}*/
 //l.parseSingleLogFile(path1);
 //l.properList(mainFolder,path1);
 //l.correctList(path1);
