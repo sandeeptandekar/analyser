@@ -13,7 +13,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 //import java.util.comparator;
 
-public class Code1 {
+public class Code {
 	public static String parentDirectory = "/home/kavitha/project/files";
 	public static String fileExtension = ".zip";
 	public static String condition = ".log";
@@ -586,7 +586,7 @@ return l6;
  
 public static void main(String[] args) throws IOException,
 			NullPointerException,FileNotFoundException {
-		Code1 l = new Code1();
+		Code l = new Code();
 		String path2= "/home/kavitha/testing7/2015_01_26_15_41_20.zip";
                 String path="/home/kavitha/testing7";
                 File mainFolder=new File(path);

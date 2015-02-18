@@ -1,6 +1,8 @@
 package files;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.io.IOException;
-
+import java.lang.String;
 import java.nio.channels.FileChannel;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +13,7 @@ import java.io.*;
 import java.util.Map.Entry;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+import java.util.Scanner;
 //import java.util.comparator;
 
 public class Code {
@@ -30,10 +33,13 @@ public class Code {
 	static String atScript="at script";
 	static String atSun="at sun";
 	static String atJavax="at javax";
-	static String traceBack="TraceBack";
+	static String traceBack="Traceback";
 	static String filePy="File";
-	static String engine="engine";
+	static String engine=", in get";
 	static String awt="awt";
+	static String at1 ="	at";
+	static String bridgeDb=".bridgedb";
+
 	//This method is to list all files with .log extension
 	public void getUnZipFiles(String path,String path2) throws IOException,
 	NullPointerException {
@@ -254,9 +260,14 @@ public class Code {
 
 		//for (String filePath : logFiles) {
 		List<Object> hm2 = parseSingleLogFile(path);
-		hmArray.addAll(hm2);//list of hashmaps are stored in Arraylist
+		List<Object> hm3 = python(path);
+		hmArray.addAll(hm2);
+		hmArray.addAll(hm3);
+		//list of hashmaps are stored in Arraylist
 		//}
 		//System.out.println(hmArray);
+		//List<Object> hm4=collectingException(path);
+		//hmArray.addAll(hm4);
 		return hmArray;
 	}
 	public List<Object> parseSingleLogFile(String src)  throws IOException
@@ -272,11 +283,13 @@ public class Code {
 		int exceptionLine=0;
 		String occurence="";
 		boolean start=false;
+		boolean start1=false;
 		int stackLine=0;
 		int check=0;
 		int equate=0;
 		int limit=7;
 		int st=0;
+		int same=0;
 		HashMap<String,Integer> hm=new HashMap<String,Integer>();
 		HashMap<String,Integer> hm1=new HashMap<String,Integer>();
 		List<Object> l=new ArrayList<Object>();
@@ -285,6 +298,7 @@ public class Code {
 			while(line != null)
 			{
 				lineNumber++;
+				//same++;
 				int index1 =line.indexOf(upperCase);
 				int index2=line.indexOf(lowerCase);
 				int index3=line.indexOf(atCom);
@@ -299,13 +313,22 @@ public class Code {
 				int index13=line.indexOf(atScript);
 				int index14=line.indexOf(atJavax);
 				int index17=line.indexOf(awt);
+				int index18=line.indexOf(at1);
+				int index20=line.indexOf(bridgeDb);
+				String convert=String.valueOf(index18);
 				//check++;
+				//String patternString="	at";
+				HashMap<String,Integer> hm22=new HashMap<String,Integer>();
+				//if(line.length() == 0)
+				//{
 				if((index1 !=-1) || (index2 !=-1))
 				{
 					start=true;
+					start1=true;
 					//System.out.println(upperCase + " found in line " + lineNumber );
 					//The line which has the keyword "Exception" or "exception" is assigned to a variable
 					extractedText = line;
+					//extractedText1= line;
 					exceptionLine=lineNumber;
 					exceptionLineNo=Integer.toString(lineNumber);
 					//THe whole line is printed
@@ -320,29 +343,35 @@ public class Code {
 						//line is added to the hashmap
 						hm1.put(extractedText,1);
 					}
-
 					occurence=exceptionLineNo+"------"+src;
-					//System.out.println(extractedText);
 					check=0;
 					equate=check;
-					//System.out.println(st);
 					st=0;
-					//System.out.println(st);
 				}
+				//}
 				equate++;
 				st++;
-				if((start ==true))
+
+				if(start == true)
 				{
-					//System.out.println(st);
-					stackLine=lineNumber;
-					//if((stackLine-lineNumber) <3)
-					//{
-					if((index3 != -1) || (index4 != -1) || (index11 !=-1) || (index12 !=-1))
+
+					//System.out.println(stackTrace);
+					String patternString="	at";
+					Pattern pattern=Pattern.compile(patternString,Pattern.CASE_INSENSITIVE);
+					Matcher matcher = pattern.matcher(line);
+					boolean matches = matcher.lookingAt();
+					String patternString1="	";
+					Pattern p=Pattern.compile("\\w+\\.?");
+					Matcher m=p.matcher(line);
+					boolean matches1=m.lookingAt();
+					//if((index3 != -1) || (index4 != -1) || (index11 !=-1) || (index12 !=-1))
+					if(matches == true)
 					{
 						stackTrace=stackTrace+line+"\n";
 						st=0;
 					}
-					if(((index7 != -1) && ((index3 != -1)&&(index6 != -1)) || ((index4 !=-1) && ((index5 != -1) && ((index10 !=-1) && (index8 != -1)) )) ||((index14 !=-1)&&(index5 !=-1) && (index10 !=-1))) || (((index5 !=-1) &&(index10 != -1) && (index8 != -1)) && (index4 !=-1)) ||((index4 != -1) && ((index17 != -1) && (index5 !=-1) && (index10 != -1))))
+
+					if(((index7 != -1) && ((index3 != -1)&&(index6 != -1)) || ((index4 !=-1) && ((index5 != -1) && ((index10 !=-1) && (index8 != -1)) )) ||((index14 !=-1)&&(index5 !=-1) && (index10 !=-1))) || (((index5 !=-1) &&(index10 != -1) && (index8 != -1)) && (index4 !=-1)) ||((index4 != -1) && ((index17 != -1) && (index5 !=-1) && (index10 != -1))) || ((index11 !=-1) && ((index20 !=-1) || ((index5 !=-1) && (index10 !=-1)))))
 					{
 						stackTrace=extractedText+stackTrace;
 						if(hm.containsKey(stackTrace))
@@ -380,10 +409,11 @@ public class Code {
 							//count=0;
 							check=0;
 							equate=check;
-							//st=0;
+							//same=0;
 						}
 					}
 				}
+
 
 				if((st==limit) && (start == true))
 				{
@@ -396,6 +426,7 @@ public class Code {
 					start=false;
 					st=0;
 					stackTrace="";
+					same=0;
 				}
 
 				//}
@@ -421,6 +452,189 @@ System.out.println("summary ==================");
 		//System.out.println(l);
 		return l;
 	}
+
+	public List<Object> python(String src)throws IOException
+	{
+		BufferedReader br = new BufferedReader(new FileReader(src));
+		String line = br.readLine();
+		int lineNumber = 0;
+		int count=0;
+		String extractedText="";
+		String stackTrace="";
+		String exceptionLineNo="";
+		int exceptionLine=0;
+		String occurence="";
+		boolean start=false;
+		boolean start1=false;
+		int stackLine=0;
+		int check=0;
+		int equate=0;
+		int limit=7;
+		int st=0;
+		int same=0;
+		HashMap<String,Integer> hm=new HashMap<String,Integer>();
+		HashMap<String,Integer> hm1=new HashMap<String,Integer>();
+		List<Object> l=new ArrayList<Object>();
+		try
+		{
+			while(line != null)
+			{
+
+				lineNumber++;
+
+				int index15=line.indexOf(traceBack);
+				int index26=line.indexOf(filePy);
+				int index37=line.indexOf(engine);
+				int index1 =line.indexOf(upperCase);
+				int index2=line.indexOf(lowerCase);
+				int index3=line.indexOf(atCom);
+				int index4=line.indexOf(atJava);
+				int index5=line.indexOf(stack);
+				int index6=line.indexOf(stack2);
+				int index7=line.indexOf(at);
+				int index8=line.indexOf(lang);
+				int index10=line.indexOf(run);
+				int index11=line.indexOf(atOrg);
+				int index12=line.indexOf(atSun);
+				int index13=line.indexOf(atScript);
+				int index14=line.indexOf(atJavax);
+				int index17=line.indexOf(awt);
+				int index18=line.indexOf(at1);
+
+
+
+
+				HashMap<String,Integer> hm22=new HashMap<String,Integer>();
+				//if(line.length() == 0)
+					//{
+					if((index15 !=-1))
+					{
+						start=true;
+						start1=true;
+
+						extractedText = line;
+
+						exceptionLine=lineNumber;
+						exceptionLineNo=Integer.toString(lineNumber);
+						//THe whole line is printed
+						if(hm1.containsKey(extractedText))
+						{
+							count=(Integer)hm1.get(extractedText);
+							count++;
+							hm1.put(extractedText,count);
+						}
+						else
+						{
+							//line is added to the hashmap
+							hm1.put(extractedText,1);
+						}
+
+						occurence=exceptionLineNo+"------"+src;
+						//System.out.println(extractedText);
+						check=0;
+						equate=check;
+						//System.out.println(st);
+						st=0;
+						same=0;
+						//System.out.println(st);
+					}
+					//}
+					equate++;
+					st++;
+
+					if(start == true)
+					{
+
+						if(index26 !=-1)
+						{
+							System.out.println(stackTrace);
+							stackTrace=stackTrace+line+"\n";
+							st=0;
+						}
+
+						if((index26 != -1) && (index37 !=-1))
+						{
+							System.out.println(stackTrace);
+							stackTrace=extractedText+stackTrace;
+							if(hm.containsKey(stackTrace))
+							{
+								count=(Integer)hm.get(stackTrace);
+								//The count value of the line is incremented
+								count++;
+								hm.put(stackTrace,count);
+								//check=0;
+							}
+							else
+							{
+								//line is added to the hashmap
+								hm.put(stackTrace,1);
+							}
+
+							System.out.println(stackTrace);
+							count=(Integer)hm.get(stackTrace);
+							//System.out.println(count);
+							occurence=exceptionLineNo +"--------" + src;
+							//System.out.println(occurence);
+							Integer g =0;
+							Integer g6=0;
+							start = false;
+							if(hm.containsKey(stackTrace))
+							{
+								g=hm.get(stackTrace);
+								l.add(stackTrace);
+								l.add(g);
+								//l.add(stackTrace);
+								l.add(occurence);
+								exceptionLine=0;
+								stackLine=0;
+								stackTrace="";
+								//count=0;
+								check=0;
+								equate=check;
+								//same=0;
+							}
+						}
+					}
+
+
+					if((st==limit) && (start == true))
+					{
+						//System.out.println(st);
+						Integer g=hm1.get(extractedText);
+						occurence=exceptionLineNo +"--------" + src;
+						l.add(extractedText);
+						l.add(g);
+						l.add(occurence);
+						start=false;
+						st=0;
+						stackTrace="";
+						same=0;
+					}
+
+					//}
+
+					line=br.readLine();
+			}
+			br.close();
+		}
+
+		catch(IOException e)
+		{
+			System.out.println("Error" + e);
+		}
+		/*System.out.println("summary ==================");
+                        for (String entry : hm.keySet()) {
+                                System.out.println("Key = " + entry + ", Value = "
+                                               + hm.get(entry));}
+System.out.println("summary ==================");
+                        for (String entry : hm1.keySet()) {
+                                System.out.println("Key = " + entry + ", Value = "
+                                               + hm1.get(entry));}*/
+
+		System.out.println(l);
+		return l;
+	}
+
 	public HashMap<Object,Object> properHash(File mainFolder,String path)throws IOException
 	{
 		List<Object> l5=parseLogFiles(mainFolder,path);
@@ -585,7 +799,7 @@ hm9.put(b1,b2);
 			}
 		}
 		//}
-		//System.out.println(l6);
+		System.out.println(l6);
 		return l6;
 
 	}
